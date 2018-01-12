@@ -1,0 +1,5 @@
+spirv-cross (2018.01.09-1) unstable; urgency=medium
+
+  * Initial release (Closes: #nnnn)  <nnnn is the bug number of your ITP>
+
+ -- Brett Johnson <brett@linuxturtle.net>  Fri, 12 Jan 2018 16:27:43 -0700
