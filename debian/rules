@@ -23,3 +23,9 @@ export DH_VERBOSE = 1
 #override_dh_auto_configure:
 #	dh_auto_configure -- #	-DCMAKE_LIBRARY_PATH=$(DEB_HOST_MULTIARCH)
 
+gentarball: SOURCE=spirv-cross
+gentarball: UV=$(shell dpkg-parsechangelog|awk '/^Version:/ {print $$2}'|sed 's/-.*$$//')
+gentarball:
+	tar --transform 's,^,$(SOURCE)-$(UV)/,' \
+		--exclude 'debian' --exclude-vcs \
+		-cJf ../$(SOURCE)_$(UV).orig.tar.xz .
