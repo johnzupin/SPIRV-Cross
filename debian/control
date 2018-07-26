@@ -1,0 +1,25 @@
+Source: spirv-cross
+Section: libdevel
+Priority: optional
+Maintainer: Brett Johnson <brett@linuxturtle.net>
+Build-Depends: debhelper (>=9)
+Standards-Version: 3.9.6
+Homepage: https://github.com/KhronosGroup/SPIRV-Cross
+Vcs-Git: https://github.com/linuxturtle/SPIRV-Cross.git
+Vcs-Browser: https://github.com/linuxturtle/SPIRV-Cross
+
+Package: spirv-cross
+Architecture: linux-any
+Depends: ${shlibs:Depends}, ${misc:Depends}
+Description: A tool for cross-compiling SPIR-V to other shader formats
+ SPIRV-Cross is a tool designed for parsing and converting SPIR-V to other
+ shader languages.
+ .
+ FEATURES:
+ - Convert SPIR-V to readable, usable and efficient GLSL
+ - Convert SPIR-V to readable, usable and efficient Metal Shading Language (MSL) [EXPERIMENTAL]
+ - Convert SPIR-V to readable, usable and efficient HLSL [EXPERIMENTAL]
+ - Convert SPIR-V to debuggable C++ [EXPERIMENTAL]
+ - Reflection API to simplify the creation of Vulkan pipeline layouts
+ - Reflection API to modify and tweak OpDecorations
+ - Supports "all" of vertex, fragment, tessellation, geometry and compute shaders.
