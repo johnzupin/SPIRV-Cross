@@ -1,8 +1,15 @@
-spirv-cross (2018.08.07+114-1) UNRELEASED; urgency=medium
+spirv-cross (2018.08.07+183-1) UNRELEASED; urgency=medium
 
+  * new upstream version
+
+ -- Jeremy Hayes <jeremy@centaurus>  Wed, 14 Nov 2018 11:41:25 -0700
+
+spirv-cross (2018.08.07+114-1) unstable; urgency=medium
+
+  [ Brett Johnson ]
   * New build for SDK 1.1.85
 
- -- Brett Johnson <brett@linuxturtle.net>  Fri, 28 Sep 2018 17:07:42 -0600
+ -- Jeremy Hayes <jeremy@centaurus>  Wed, 14 Nov 2018 11:41:25 -0700
 
 spirv-cross (2018.07.26-1) unstable; urgency=medium
 
