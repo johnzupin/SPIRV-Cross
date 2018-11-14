@@ -1,0 +1,2 @@
+spirv-cross usr/bin
+libspirv-cross.a /usr/lib
