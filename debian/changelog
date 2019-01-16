@@ -1,8 +1,8 @@
-spirv-cross (2018.08.07+183-1) UNRELEASED; urgency=medium
+spirv-cross (2018.08.07+183-1lunarg16.04.1.1) xenial; urgency=medium
 
   * new upstream version
 
- -- Jeremy Hayes <jeremy@centaurus>  Wed, 14 Nov 2018 11:41:25 -0700
+ -- Jeremy Hayes <jeremy@centaurus>  Wed, 14 Nov 2018 11:42:53 -0700
 
 spirv-cross (2018.08.07+114-1) unstable; urgency=medium
 
