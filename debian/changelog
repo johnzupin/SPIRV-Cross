@@ -1,8 +1,14 @@
+spirv-cross (2019.05.20+35-1) UNRELEASED; urgency=medium
+
+  * New 1.1.108.0~rc1 SDK
+
+ -- John Zupin <john@odin>  Tue, 11 Jun 2019 16:09:01 -0600
+
 spirv-cross (2019.03.29+40-1lunarg16.04.1.1) xenial; urgency=medium
 
   * create 1.1.106.0 sdk
 
- -- John Zupin <john@odin>  Wed, 10 Apr 2019 17:58:27 -0600
+ -- John Zupin <john@odin>  Tue, 11 Jun 2019 16:09:01 -0600
 
 spirv-cross (2019.02.20+30-1lunarg16.04.1.1) xenial; urgency=medium
 
