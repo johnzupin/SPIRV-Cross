@@ -1,4 +1,10 @@
-spirv-cross (2019.05.20+35-1) UNRELEASED; urgency=medium
+spirv-cross (2019.06.21+76-1lunarg16.04.1.1) xenial; urgency=medium
+
+  * New 1.1.114.0 SDK
+
+ -- John Zupin <john@odin>  Mon, 22 Jul 2019 19:02:03 -0600
+
+spirv-cross (2019.05.20+35-1) unstable; urgency=medium
 
   * New 1.1.108.0~rc1 SDK
 
