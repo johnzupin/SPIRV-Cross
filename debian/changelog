@@ -1,3 +1,9 @@
+spirv-cross (2019.09.06+45-1ubuntu16.04.1.1) xenial; urgency=medium
+
+  * Automated package build
+
+ -- John Zupin <john@odin>  Tue, 29 Oct 2019 15:42:59 -0600
+
 spirv-cross (2019.06.21+76-1lunarg16.04.1.1) xenial; urgency=medium
 
   * New 1.1.114.0 SDK
