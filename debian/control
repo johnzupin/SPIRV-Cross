@@ -14,3 +14,10 @@ Architecture: any
 Depends: ${shlibs:Depends}, ${misc:Depends}
 Description: SPIRV-Cross is a tool designed for parsing and
  converting SPIR-V to other shader languages.
+
+Package: spirv-cross-dev
+Architecture: any
+Depends: ${shlibs:Depends}, ${misc:Depends}
+Description:  SPIRV-Cross is a tool designed for parsing and
+ converting SPIR-V to other shader languages.
+
