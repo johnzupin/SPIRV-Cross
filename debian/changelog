@@ -1,3 +1,9 @@
+spirv-cross (2020.05.19+18-1ubuntu16.04.1.1) xenial; urgency=medium
+
+  * Automated package build
+
+ -- John Zupin <john@odin>  Thu, 04 Jun 2020 17:57:24 -0600
+
 spirv-cross (2020.02.26+22-1ubuntu16.04.1.1) xenial; urgency=medium
 
   * Automated package build
