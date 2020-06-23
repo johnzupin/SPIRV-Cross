@@ -1,0 +1,16 @@
+Source: spirv-cross
+Section: graphics
+Priority: optional
+Maintainer: John Zupin <johnz@lunarg.com>
+Build-Depends: debhelper (>= 10),
+ cmake
+Standards-Version: 4.1.2
+Homepage: https://github.com/KhronosGroup/SPIRV-Cross
+Vcs-Git: https://github.com/KhronosGroup/SPIRV-Cross
+Vcs-Browser: https://github.com/KhronosGroup/SPIRV-Cross
+
+Package: spirv-cross
+Architecture: any
+Depends: ${shlibs:Depends}, ${misc:Depends}
+Description: SPIRV-Cross is a tool designed for parsing and
+ converting SPIR-V to other shader languages.

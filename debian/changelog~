@@ -1,0 +1,5 @@
+spirv-cross (2020.5.19+18-1) unstable; urgency=medium
+
+  * Initial release (Closes: #nnnn)  <nnnn is the bug number of your ITP>
+
+ -- John Zupin <john@unknown>  Tue, 23 Jun 2020 14:23:20 -0600
