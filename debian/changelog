@@ -1,3 +1,103 @@
+spirv-cross (2020.06.29+27-1lunarg18.04-1) bionic; urgency=medium
+
+  [ Hans-Kristian Arntzen ]
+  * HLSL: Add native support for 16-bit types.
+  * MSL: Remove obsolete MSLVertexAttr members.
+  * GLSL: Implement sparse feedback.
+
+  [ Alexander Meißner ]
+  * Fix missing switch cases in Y'CbCr conversion
+
+  [ Hans-Kristian Arntzen ]
+  * Refactor texture fetch function generation.
+  * GLSL: Support uint code for sparse residency query.
+  * GLSL: Handle the rest of GL_ARB_sparse_texture_clamp.
+
+  [ rdb ]
+  * GLSL: Require GL_ARB_draw_instanced for gl_InstanceID in GLSL < 1.40
+
+  [ Hans-Kristian Arntzen ]
+  * HLSL: Fix texProj in legacy HLSL.
+
+  [ Chip Davis ]
+  * MSL: Fix up input variables' vector lengths in all stages.
+
+  [ Hans-Kristian Arntzen ]
+  * Remove unused member in MSLShaderInput.
+  * Clean up some deprecation warnings when building with Makefile.
+  * MSL: Improve handling of array types in buffer objects.
+  * MSL: Add tests for array copies in and out of buffers.
+  * MSL: Deal with loading non-value-type arrays.
+  * MSL: Add test case for constructing struct with non-value-type array.
+  * Fix duplicated initialization for loop variables with initializers.
+
+  [ Corentin Wallez ]
+  * Fix placement of SPIRV_CROSS_DEPRECATED.
+
+  [ Hans-Kristian Arntzen ]
+  * MSL: Remove the old VertexAttr API.
+
+  [ dan sinclair ]
+  * Roll deps and update tests.
+
+  [ Hans-Kristian Arntzen ]
+  * HLSL: Workaround FXC bugs with degenerate switch blocks.
+
+  [ John Zupin ]
+  * patch: remove the root makefile so we can use cmake
+  * packages: remove backup files
+  * package: add spirv-cross-dev package
+
+  [ Hans-Kristian Arntzen ]
+  * Fix bug with control dependent expression tracking.
+  * Implement context-sensitive expression read tracking.
+  * GLSL: Use for-loop fallback instead of do/while for legacy ESSL.
+  * GLSL: Implement switch on ESSL 1.0.
+  * GLSL: Fix nested legacy switch workarounds.
+  * test: Use --hlsl-dx9-compatible when attempting to compile SM 3.0 shaders.
+  * Run format_all.sh.
+  * GLSL: Support multi-level struct flattening for I/O.
+  * GLSL: Support I/O flattening with arrays as final type.
+  * MSL: Use input attachment index directly for resource index fallback.
+  * MSL: Workaround broken vector -> scalar access chain in MSL.
+  * MSL: Do not emit swizzled writes in packing fixups.
+
+  [ dan sinclair ]
+  * Roll deps.
+
+  [ Thomas Roughton ]
+  * MSL: Ensure OpStore source operands are marked for inclusion in function arguments
+
+  [ Hans-Kristian Arntzen ]
+  * Merging with 2020-06-29 tag for testing
+
+  [ John Zupin ]
+  * update patch to fix Makefile
+
+  [ Hans-Kristian Arntzen ]
+  * MSVC 2013: Fix silently broken builds.
+
+  [ John Zupin ]
+  * copyright: update for release
+
+  [ Chip Davis ]
+  * MSL: Factor a really gnarly condition into its own method.
+  * MSL: Factor creating a uint type into its own method.
+
+  [ dan sinclair ]
+  * Roll GLSLang, SPIRV-Headers and SPIRV-Tools.
+
+  [ Chip Davis ]
+  * MSL: Add support for processing more than one patch per workgroup.
+
+  [ Tomek Ponitka ]
+  * Enabling setting a fixed sampleMask in Metal fragment shaders.
+
+  [ John Zupin ]
+  * copyright: updated for lunarg debian files
+
+ -- John Zupin <john@odin>  Mon, 27 Jul 2020 15:00:26 -0600
+
 spirv-cross (2020.5.19+18-1) bionic; urgency=medium
 
   * Initial release
