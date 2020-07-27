@@ -280,6 +280,22 @@ def cross_compile_msl(shader, spirv, opt, iterations, paths):
         msl_args.append('6')
         msl_args.append('other')
         msl_args.append('4')
+    if '.multi-patch.' in shader:
+        msl_args.append('--msl-multi-patch-workgroup')
+        # Arbitrary for testing purposes.
+        msl_args.append('--msl-shader-input')
+        msl_args.append('0')
+        msl_args.append('any32')
+        msl_args.append('3')
+        msl_args.append('--msl-shader-input')
+        msl_args.append('1')
+        msl_args.append('any16')
+        msl_args.append('2')
+    if '.for-tess.' in shader:
+        msl_args.append('--msl-vertex-for-tessellation')
+    if '.fixed-sample-mask.' in shader:
+        msl_args.append('--msl-additional-fixed-sample-mask')
+        msl_args.append('0x00000022')
 
     subprocess.check_call(msl_args)
 
@@ -326,8 +342,13 @@ def validate_shader_hlsl(shader, force_no_external_validation, paths):
     if '.fxconly.' in shader:
         test_glslang = False
 
+    hlsl_args = [paths.glslang, '--amb', '-e', 'main', '-D', '--target-env', 'vulkan1.1', '-V', shader]
+    if '.sm30.' in shader:
+        hlsl_args.append('--hlsl-dx9-compatible')
+
     if test_glslang:
-        subprocess.check_call([paths.glslang, '--amb', '-e', 'main', '-D', '--target-env', 'vulkan1.1', '-V', shader])
+        subprocess.check_call(hlsl_args)
+
     is_no_fxc = '.nofxc.' in shader
     global ignore_fxc
     if (not ignore_fxc) and (not force_no_external_validation) and (not is_no_fxc):
