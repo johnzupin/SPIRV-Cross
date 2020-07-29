@@ -1,3 +1,10 @@
+spirv-cross (2020.06.29+27-1ubuntu20.04-2) focal; urgency=medium
+
+  * control: breaks/replaces because of fix
+  * install: install the .so in the dev package
+
+ -- John Zupin <john@odin>  Wed, 29 Jul 2020 15:07:43 -0600
+
 spirv-cross (2020.06.29+27-1lunarg20.04-1) focal; urgency=medium
 
   [ Hans-Kristian Arntzen ]
