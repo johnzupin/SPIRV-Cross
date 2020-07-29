@@ -1,3 +1,9 @@
+spirv-cross (2020.06.29+27-1ubuntu18.04-3) bionic; urgency=medium
+
+  * install: update to add so.0 to dev
+
+ -- John Zupin <john@odin>  Wed, 29 Jul 2020 15:41:15 -0600
+
 spirv-cross (2020.06.29+27-1ubuntu18.04-2) bionic; urgency=medium
 
   * control: breaks/replaces because of fix
