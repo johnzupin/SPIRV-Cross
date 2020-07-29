@@ -1,3 +1,10 @@
+spirv-cross (2020.06.29+27-1ubuntu18.04-2) bionic; urgency=medium
+
+  * control: breaks/replaces because of fix
+  * install: install the .so in the dev package
+
+ -- John Zupin <john@odin>  Wed, 29 Jul 2020 15:06:07 -0600
+
 spirv-cross (2020.06.29+27-1lunarg18.04-1) bionic; urgency=medium
 
   [ Hans-Kristian Arntzen ]
