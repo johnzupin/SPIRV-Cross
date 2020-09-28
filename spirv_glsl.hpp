@@ -121,6 +121,10 @@ public:
 		// which would otherwise be uninitialized will now be initialized to 0 instead.
 		bool force_zero_initialized_variables = false;
 
+		// In GLSL, force use of I/O block flattening, similar to
+		// what happens on legacy GLSL targets for blocks and structs.
+		bool force_flattened_io_blocks = false;
+
 		enum Precision
 		{
 			DontCare,
@@ -131,12 +135,14 @@ public:
 
 		struct VertexOptions
 		{
-			// GLSL: In vertex shaders, rewrite [0, w] depth (Vulkan/D3D style) to [-w, w] depth (GL style).
-			// MSL: In vertex shaders, rewrite [-w, w] depth (GL style) to [0, w] depth.
-			// HLSL: In vertex shaders, rewrite [-w, w] depth (GL style) to [0, w] depth.
+			// "Vertex-like shader" here is any shader stage that can write BuiltInPosition.
+
+			// GLSL: In vertex-like shaders, rewrite [0, w] depth (Vulkan/D3D style) to [-w, w] depth (GL style).
+			// MSL: In vertex-like shaders, rewrite [-w, w] depth (GL style) to [0, w] depth.
+			// HLSL: In vertex-like shaders, rewrite [-w, w] depth (GL style) to [0, w] depth.
 			bool fixup_clipspace = false;
 
-			// Inverts gl_Position.y or equivalent.
+			// In vertex-like shaders, inverts gl_Position.y or equivalent.
 			bool flip_vert_y = false;
 
 			// GLSL only, for HLSL version of this option, see CompilerHLSL.
@@ -483,6 +489,7 @@ protected:
 	void emit_buffer_reference_block(SPIRType &type, bool forward_declaration);
 	void emit_buffer_block_legacy(const SPIRVariable &var);
 	void emit_buffer_block_flattened(const SPIRVariable &type);
+	void fixup_implicit_builtin_block_names();
 	void emit_declared_builtin_block(spv::StorageClass storage, spv::ExecutionModel model);
 	bool should_force_emit_builtin_block(spv::StorageClass storage);
 	void emit_push_constant_block_vulkan(const SPIRVariable &var);
@@ -752,8 +759,6 @@ protected:
 	bool type_is_empty(const SPIRType &type);
 
 	virtual void declare_undefined_values();
-
-	static std::string sanitize_underscores(const std::string &str);
 
 	bool can_use_io_location(spv::StorageClass storage, bool block);
 	const Instruction *get_next_instruction_in_block(const Instruction &instr);

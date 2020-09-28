@@ -549,6 +549,7 @@ struct CLIArguments
 	bool msl_invariant_float_math = false;
 	bool msl_emulate_cube_array = false;
 	bool msl_multiview = false;
+	bool msl_multiview_layered_rendering = true;
 	bool msl_view_index_from_device_index = false;
 	bool msl_dispatch_base = false;
 	bool msl_decoration_binding = false;
@@ -561,8 +562,10 @@ struct CLIArguments
 	bool msl_multi_patch_workgroup = false;
 	bool msl_vertex_for_tessellation = false;
 	uint32_t msl_additional_fixed_sample_mask = 0xffffffff;
+	bool msl_arrayed_subpass_input = false;
 	bool glsl_emit_push_constant_as_ubo = false;
 	bool glsl_emit_ubo_as_plain_uniforms = false;
+	bool glsl_force_flattened_io_blocks = false;
 	SmallVector<pair<uint32_t, uint32_t>> glsl_ext_framebuffer_fetch;
 	bool vulkan_glsl_disable_ext_samplerless_texture_functions = false;
 	bool emit_line_directives = false;
@@ -674,6 +677,7 @@ static void print_help_glsl()
 	                "\t[--no-420pack-extension]:\n\t\tDo not make use of GL_ARB_shading_language_420pack in older GL targets to support layout(binding).\n"
 	                "\t[--remap-variable-type <variable_name> <new_variable_type>]:\n\t\tRemaps a variable type based on name.\n"
 	                "\t\tPrimary use case is supporting external samplers in ESSL for video rendering on Android where you could remap a texture to a YUV one.\n"
+	                "\t[--glsl-force-flattened-io-blocks]:\n\t\tAlways flatten I/O blocks and structs.\n"
 	);
 	// clang-format on
 }
@@ -730,6 +734,8 @@ static void print_help_msl()
 	                "\t[--msl-device-argument-buffer <descriptor set index>]:\n\t\tUse device address space to hold indirect argument buffers instead of constant.\n"
 	                "\t\tComes up when trying to support argument buffers which are larger than 64 KiB.\n"
 	                "\t[--msl-multiview]:\n\t\tEnable SPV_KHR_multiview emulation.\n"
+	                "\t[--msl-multiview-no-layered-rendering]:\n\t\tDon't set [[render_target_array_index]] in multiview shaders.\n"
+	                "\t\tUseful for devices which don't support layered rendering. Only effective when --msl-multiview is enabled.\n"
 	                "\t[--msl-view-index-from-device-index]:\n\t\tTreat the view index as the device index instead.\n"
 	                "\t\tFor multi-GPU rendering.\n"
 	                "\t[--msl-dispatch-base]:\n\t\tAdd support for vkCmdDispatchBase() or similar APIs.\n"
@@ -760,7 +766,9 @@ static void print_help_msl()
 	                "\t[--msl-vertex-for-tessellation]:\n\t\tWhen handling a vertex shader, marks it as one that will be used with a new-style tessellation control shader.\n"
 					"\t\tThe vertex shader is output to MSL as a compute kernel which outputs vertices to the buffer in the order they are received, rather than in index order as with --msl-capture-output normally.\n"
 	                "\t[--msl-additional-fixed-sample-mask <mask>]:\n"
-	                "\t\tSet an additional fixed sample mask. If the shader outputs a sample mask, then the final sample mask will be a bitwise AND of the two.\n");
+	                "\t\tSet an additional fixed sample mask. If the shader outputs a sample mask, then the final sample mask will be a bitwise AND of the two.\n"
+	                "\t[--msl-arrayed-subpass-input]:\n\t\tAssume that images of dimension SubpassData have multiple layers. Layered input attachments are accessed relative to BuiltInLayer.\n"
+	                "\t\tThis option has no effect if multiview is also enabled.\n");
 	// clang-format on
 }
 
@@ -985,6 +993,7 @@ static string compile_iteration(const CLIArguments &args, std::vector<uint32_t> 
 		msl_opts.argument_buffers = args.msl_argument_buffers;
 		msl_opts.texture_buffer_native = args.msl_texture_buffer_native;
 		msl_opts.multiview = args.msl_multiview;
+		msl_opts.multiview_layered_rendering = args.msl_multiview_layered_rendering;
 		msl_opts.view_index_from_device_index = args.msl_view_index_from_device_index;
 		msl_opts.dispatch_base = args.msl_dispatch_base;
 		msl_opts.enable_decoration_binding = args.msl_decoration_binding;
@@ -997,6 +1006,7 @@ static string compile_iteration(const CLIArguments &args, std::vector<uint32_t> 
 		msl_opts.multi_patch_workgroup = args.msl_multi_patch_workgroup;
 		msl_opts.vertex_for_tessellation = args.msl_vertex_for_tessellation;
 		msl_opts.additional_fixed_sample_mask = args.msl_additional_fixed_sample_mask;
+		msl_opts.arrayed_subpass_input = args.msl_arrayed_subpass_input;
 		msl_comp->set_msl_options(msl_opts);
 		for (auto &v : args.msl_discrete_descriptor_sets)
 			msl_comp->add_discrete_descriptor_set(v);
@@ -1131,6 +1141,7 @@ static string compile_iteration(const CLIArguments &args, std::vector<uint32_t> 
 	opts.vertex.support_nonzero_base_instance = args.support_nonzero_baseinstance;
 	opts.emit_push_constant_as_uniform_buffer = args.glsl_emit_push_constant_as_ubo;
 	opts.emit_uniform_buffer_as_plain_uniforms = args.glsl_emit_ubo_as_plain_uniforms;
+	opts.force_flattened_io_blocks = args.glsl_force_flattened_io_blocks;
 	opts.emit_line_directives = args.emit_line_directives;
 	opts.enable_storage_image_qualifier_deduction = args.enable_storage_image_qualifier_deduction;
 	opts.force_zero_initialized_variables = args.force_zero_initialized_variables;
@@ -1319,6 +1330,7 @@ static int main_inner(int argc, char *argv[])
 	cbs.add("--metal", [&args](CLIParser &) { args.msl = true; }); // Legacy compatibility
 	cbs.add("--glsl-emit-push-constant-as-ubo", [&args](CLIParser &) { args.glsl_emit_push_constant_as_ubo = true; });
 	cbs.add("--glsl-emit-ubo-as-plain-uniforms", [&args](CLIParser &) { args.glsl_emit_ubo_as_plain_uniforms = true; });
+	cbs.add("--glsl-force-flattened-io-blocks", [&args](CLIParser &) { args.glsl_force_flattened_io_blocks = true; });
 	cbs.add("--glsl-remap-ext-framebuffer-fetch", [&args](CLIParser &parser) {
 		uint32_t input_index = parser.next_uint();
 		uint32_t color_attachment = parser.next_uint();
@@ -1362,6 +1374,8 @@ static int main_inner(int argc, char *argv[])
 	cbs.add("--msl-invariant-float-math", [&args](CLIParser &) { args.msl_invariant_float_math = true; });
 	cbs.add("--msl-emulate-cube-array", [&args](CLIParser &) { args.msl_emulate_cube_array = true; });
 	cbs.add("--msl-multiview", [&args](CLIParser &) { args.msl_multiview = true; });
+	cbs.add("--msl-multiview-no-layered-rendering",
+	        [&args](CLIParser &) { args.msl_multiview_layered_rendering = false; });
 	cbs.add("--msl-view-index-from-device-index",
 	        [&args](CLIParser &) { args.msl_view_index_from_device_index = true; });
 	cbs.add("--msl-dispatch-base", [&args](CLIParser &) { args.msl_dispatch_base = true; });
@@ -1412,6 +1426,7 @@ static int main_inner(int argc, char *argv[])
 	cbs.add("--msl-vertex-for-tessellation", [&args](CLIParser &) { args.msl_vertex_for_tessellation = true; });
 	cbs.add("--msl-additional-fixed-sample-mask",
 	        [&args](CLIParser &parser) { args.msl_additional_fixed_sample_mask = parser.next_hex_uint(); });
+	cbs.add("--msl-arrayed-subpass-input", [&args](CLIParser &) { args.msl_arrayed_subpass_input = true; });
 	cbs.add("--extension", [&args](CLIParser &parser) { args.extensions.push_back(parser.next_string()); });
 	cbs.add("--rename-entry-point", [&args](CLIParser &parser) {
 		auto old_name = parser.next_string();
