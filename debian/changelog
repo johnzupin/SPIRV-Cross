@@ -1,3 +1,63 @@
+spirv-cross (2020.09.17+6-1lunarg18.04-1) bionic; urgency=medium
+
+  [ Tomek Ponitka ]
+  * Adding BuiltInSampleMask in HLSL
+
+  [ Hans-Kristian Arntzen ]
+  * GLSL: Add option to force flattening IO blocks.
+  * Only rewrite type aliases for the base type.
+  * GLSL: Be more aggressive about using type_alias.
+  * Ensure that we use primary alias type when emitting flattened members.
+  * Add some test cases for complex type aliasing scenario.
+
+  [ John Zupin ]
+  * debian: remove README.Debian
+
+  [ Chip Davis ]
+  * MSL: Fix handling of matrices and structs in the output control point array.
+
+  [ Le Hoang Quyen ]
+  * Fix #1445: MSL: Enclose args when convert distance(a,b) to abs(a-b)
+
+  [ Hans-Kristian Arntzen ]
+  * HLSL: Fix bug in is_packing_standard for cbuffer.
+  * HLSL: Deal with partially filled 16-byte word in cbuffers.
+  * HLSL: Fix FragCoord.w.
+  * Overhaul how we deal with reserved identifiers.
+  * Work around annoying warning on GCC 10.2.
+  * Run format_all.sh.
+
+  [ Chip Davis ]
+  * MSL: Fix multiview view index calculation with a non-zero base instance.
+  * MSL: Don't set the layer for multiview if the device doesn't support it.
+
+  [ Hans-Kristian Arntzen ]
+  * MSL: Fix OpCompositeInsert and OpVectorInsertDynamic.
+
+  [ Chip Davis ]
+  * MSL: Support layered input attachments.
+
+  [ Hans-Kristian Arntzen ]
+  * Handle OpUndef %void.
+  * Roll glslang/SPIRV-Tools deps.
+
+  [ Corentin Wallez ]
+  * Fix -Wduplicate-enum and -Wrange-for-analysis.
+
+  [ Hans-Kristian Arntzen ]
+  * Implement a simple evaluator of specialization constants.
+  * Deal with case where a selection construct conditionally merges/breaks.
+  * Clean up conditional branch codegen.
+
+  [ dan sinclair ]
+  * Roll dependencies.
+
+  [ Hans-Kristian Arntzen ]
+  * Allow flip_vert_y in all relevant stages.
+  * Work around MSVC warning.
+
+ -- John Zupin <john@odin>  Mon, 28 Sep 2020 16:55:32 -0600
+
 spirv-cross (2020.06.29+27-1ubuntu18.04-3) bionic; urgency=medium
 
   * install: update to add so.0 to dev
