@@ -107,17 +107,17 @@ def print_msl_compiler_version():
     except subprocess.CalledProcessError:
         pass
 
-def msl_compiler_supports_22():
+def msl_compiler_supports_version(version):
     try:
-        subprocess.check_call(['xcrun', '--sdk', 'macosx', 'metal', '-x', 'metal', '-std=macos-metal2.2', '-'],
+        subprocess.check_call(['xcrun', '--sdk', 'macosx', 'metal', '-x', 'metal', '-std=macos-metal' + version, '-'],
                 stdin = subprocess.DEVNULL, stdout = subprocess.DEVNULL, stderr = subprocess.DEVNULL)
-        print('Current SDK supports MSL 2.2. Enabling validation for MSL 2.2 shaders.')
+        print('Current SDK supports MSL {0}. Enabling validation for MSL {0} shaders.'.format(version))
         return True
     except OSError as e:
-        print('Failed to check if MSL 2.2 is not supported. It probably is not.')
+        print('Failed to check if MSL {} is not supported. It probably is not.'.format(version))
         return False
     except subprocess.CalledProcessError:
-        print('Current SDK does NOT support MSL 2.2. Disabling validation for MSL 2.2 shaders.')
+        print('Current SDK does NOT support MSL {0}. Disabling validation for MSL {0} shaders.'.format(version))
         return False
 
 def path_to_msl_standard(shader):
@@ -128,6 +128,8 @@ def path_to_msl_standard(shader):
             return '-std=ios-metal2.1'
         elif '.msl22.' in shader:
             return '-std=ios-metal2.2'
+        elif '.msl23.' in shader:
+            return '-std=ios-metal2.3'
         elif '.msl11.' in shader:
             return '-std=ios-metal1.1'
         elif '.msl10.' in shader:
@@ -141,6 +143,8 @@ def path_to_msl_standard(shader):
             return '-std=macos-metal2.1'
         elif '.msl22.' in shader:
             return '-std=macos-metal2.2'
+        elif '.msl23.' in shader:
+            return '-std=macos-metal2.3'
         elif '.msl11.' in shader:
             return '-std=macos-metal1.1'
         else:
@@ -153,6 +157,8 @@ def path_to_msl_standard_cli(shader):
         return '20100'
     elif '.msl22.' in shader:
         return '20200'
+    elif '.msl23.' in shader:
+        return '20300'
     elif '.msl11.' in shader:
         return '10100'
     else:
@@ -300,6 +306,18 @@ def cross_compile_msl(shader, spirv, opt, iterations, paths):
         msl_args.append('0x00000022')
     if '.arrayed-subpass.' in shader:
         msl_args.append('--msl-arrayed-subpass-input')
+    if '.1d-as-2d.' in shader:
+        msl_args.append('--msl-texture-1d-as-2d')
+    if '.simd.' in shader:
+        msl_args.append('--msl-ios-use-simdgroup-functions')
+    if '.emulate-subgroup.' in shader:
+        msl_args.append('--msl-emulate-subgroups')
+    if '.fixed-subgroup.' in shader:
+        # Arbitrary for testing purposes.
+        msl_args.append('--msl-fixed-subgroup-size')
+        msl_args.append('32')
+    if '.force-sample.' in shader:
+        msl_args.append('--msl-force-sample-rate-shading')
 
     subprocess.check_call(msl_args)
 
@@ -417,6 +435,8 @@ def cross_compile_hlsl(shader, spirv, opt, force_no_external_validation, iterati
         hlsl_args.append('--hlsl-nonwritable-uav-texture-as-srv')
     if '.native-16bit.' in shader:
         hlsl_args.append('--hlsl-enable-16bit-types')
+    if '.flatten-matrix-vertex-input.' in shader:
+        hlsl_args.append('--hlsl-flatten-matrix-vertex-input-semantics')
 
     subprocess.check_call(hlsl_args)
 
@@ -712,7 +732,8 @@ def test_shader_msl(stats, shader, args, paths):
 #    print('SPRIV shader: ' + spirv)
 
     shader_is_msl22 = 'msl22' in joined_path
-    skip_validation = shader_is_msl22 and (not args.msl22)
+    shader_is_msl23 = 'msl23' in joined_path
+    skip_validation = (shader_is_msl22 and (not args.msl22)) or (shader_is_msl23 and (not args.msl23))
     if '.invalid.' in joined_path:
         skip_validation = True
 
@@ -860,9 +881,11 @@ def main():
         args.parallel = False
 
     args.msl22 = False
+    args.msl23 = False
     if args.msl:
         print_msl_compiler_version()
-        args.msl22 = msl_compiler_supports_22()
+        args.msl22 = msl_compiler_supports_version('2.2')
+        args.msl23 = msl_compiler_supports_version('2.3')
 
     backend = 'glsl'
     if (args.msl or args.metal):

@@ -12,7 +12,14 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-cmake_minimum_required(VERSION 2.8)
+#
+# At your option, you may choose to accept this material under either:
+#  1. The Apache License, Version 2.0, found at <http://www.apache.org/licenses/LICENSE-2.0>, or
+#  2. The MIT License, found at <http://opensource.org/licenses/MIT>.
+# SPDX-License-Identifier: Apache-2.0 OR MIT.
+#
+
+cmake_minimum_required(VERSION 3.0)
 set(CMAKE_CXX_STANDARD 11)
 
 # Avoid a warning if parent project sets VERSION in project().
@@ -323,7 +330,7 @@ if (SPIRV_CROSS_STATIC)
 endif()
 
 set(spirv-cross-abi-major 0)
-set(spirv-cross-abi-minor 39)
+set(spirv-cross-abi-minor 44)
 set(spirv-cross-abi-patch 0)
 
 if (SPIRV_CROSS_SHARED)
