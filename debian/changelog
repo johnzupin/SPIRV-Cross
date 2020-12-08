@@ -1,3 +1,151 @@
+spirv-cross (2020.09.17+122-1lunarg20.04-1) focal; urgency=medium
+
+  [ Hans-Kristian Arntzen ]
+  * GLSL: Use literal array size for cull/clip array sizes.
+  * GLSL: Add support for transform_feedback3 geometry streams.
+
+  [ criss ]
+  * Resolved issues 1350, 1351, 1352
+
+  [ Hans-Kristian Arntzen ]
+  * Update GL subgroup test file.
+  * Add missing VK variant of the test file.
+  * Style nits for GL subgroup implementation.
+
+  [ Chip Davis ]
+  * MSL: Support SPV_EXT_demote_to_helper_invocation for MSL 2.3.
+  * MSL: Support atomic access to images from argument buffers.
+  * MSL: Add missing interlock handling to atomic image buffers.
+  * MSL: Fix calculation of atomic image buffer address.
+
+  [ Hans-Kristian Arntzen ]
+  * MSL: Support querying and modifying generated combined sampler suffix.
+  * GLSL: Use need_transpose when checking for non-native matrix.
+
+  [ Chip Davis ]
+  * MSL: Don't use a bitcast for tessellation levels in tesc shaders.
+  * MSL: Handle Offset and Grad operands for 1D-as-2D textures.
+  * MSL: Don't remove periods from swizzle buffer index exprs.
+  * MSL: Correct definitions of subgroup ballot mask variables.
+  * MSL: Support vectors with OpGroupNonUniformAllEqual.
+  * MSL: Mask ballots passed to Ballot bit ops.
+  * MSL: Cast broadcast booleans to ushort.
+
+  [ Hans-Kristian Arntzen ]
+  * Update TravisCI python reference.
+  * MSL: Do not use component::x gather for depth2d textures.
+
+  [ Chip Davis ]
+  * MSL: For 2.1+, don't disable rasterization for vertex writes.
+
+  [ Hans-Kristian Arntzen ]
+  * GLSL: Support a workaround for loading row-major matrices.
+  * Handle case where block is loop header, continue AND break block.
+
+  [ Chip Davis ]
+  * MSL: Allow post-depth coverage on Mac in MSL 2.3.
+  * MSL: Allow framebuffer fetch on Mac in MSL 2.3.
+
+  [ Bill Hollings ]
+  * MSL: Support run-time sized image and sampler arrays (GL_EXT_nonuniform_qualifier/SPV_EXT_descriptor_indexing).
+
+  [ Yuwen Wu ]
+  * added metal keyworld: "level" (#1501)
+
+  [ atyuwen ]
+  * fixed compile error with -std=c++20
+
+  [ Hans-Kristian Arntzen ]
+  * GLSL: Fix nonuniformEXT injection.
+
+  [ Chip Davis ]
+  * MSL: Allow Bias and Grad arguments with comparison on Mac in MSL 2.3.
+
+  [ Bill Hollings ]
+  * Minor format and typo updates from code review.
+
+  [ devsh ]
+  * Fix some bad assumptions about emulating `subgroupBarrier`
+
+  [ criss ]
+  * Updated ref file for subgroups_basicvoteballot.vk.comp
+
+  [ Bill Hollings ]
+  * Syntax and format updates from code review.
+
+  [ Hans-Kristian Arntzen ]
+  * Parser: Don't assume OpTypePointer will always take a SPIRType.
+  * HLSL: Add option to flatten matrix vertex input semantics.
+
+  [ rdb ]
+  * HLSL: Support depth comparison texture sampling in SM 2/3.
+  * HLSL: Add regression test for SM3.0 texture samplers
+  * HLSL: Support roundEven() in HLSL SM 4.0 and above
+
+  [ Chip Davis ]
+  * MSL: Support pull-model interpolation on MSL 2.3+.
+
+  [ Hans-Kristian Arntzen ]
+  * MSL: Fix regression in image gather handling.
+
+  [ rdb ]
+  * GLSL: Fix support for textureLod in legacy vertex shaders
+  * GLSL: Fix round/roundEven for legacy GLSL.
+  * GLSL: implement transpose() in GLSL 1.10 / ES 1.00
+  * GLSL: Remove unused `lod` argument from legacy_tex_op()
+  * GLSL: Add error checking and extension fallback for textureGather
+
+  [ Hans-Kristian Arntzen ]
+  * Update texture gather test result.
+  * Run format_all.sh.
+
+  [ Jan Sikorski ]
+  * MSL: extract global variables from subgroup ballot operations
+
+  [ rdb ]
+  * GLSL: Legacy / extension fallbacks for textureSize and texelFetch
+
+  [ Hans-Kristian Arntzen ]
+  * Fix switch fallthrough
+  * MSL: Add missing reference file.
+
+  [ Chip Davis ]
+  * MSL: Expose some more features on iOS.
+
+  [ rdb ]
+  * GLSL: Require GL_ARB_vertex_attrib_64bit for double input in pre-4.10
+
+  [ Chip Davis ]
+  * MSL: Expand subgroup support.
+
+  [ scribam ]
+  * CMake: Set minimum required version to 3.0
+
+  [ Hans-Kristian Arntzen ]
+  * Normalize all internal workaround methods to use spv prefix.
+  * HLSL: Fix validation with FXC for test.
+  * GLSL: Emit storage qualifiers for buffer_reference.
+  * GLSL: Fix buffer_reference with aliased names.
+
+  [ Chip Davis ]
+  * MSL: Adjust FragCoord for sample-rate shading.
+  * MSL: Don't mask off inactive bits in ballot masks.
+
+  [ comex ]
+  * spirv_msl: Don't add fixup hooks for builtin variables if they're unused.
+  * msl: Don't try to use [[thread_index_in_simdgroup]] in vertex shaders.
+
+  [ Jan Sikorski ]
+  * MSL: Added fmin3 and fmax3 library functions to the illegal name list.
+
+  [ Hans-Kristian Arntzen ]
+  * Add MIT dual license for the SPIRV-Cross API.
+
+  [ John Zupin ]
+  * packaging: update copyright
+
+ -- John Zupin <john@odin>  Tue, 08 Dec 2020 10:31:39 -0700
+
 spirv-cross (2020.09.17+6-1lunarg20.04-1) focal; urgency=medium
 
   [ Tomek Ponitka ]
