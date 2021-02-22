@@ -1,3 +1,66 @@
+spirv-cross (2021.01.15+25~rc1-1lunarg20.04-1) focal; urgency=medium
+
+  [ Hans-Kristian Arntzen ]
+  * GLSL/HLSL: Disallow VariablePointers capability outright.
+  * GLSL: Emit nonuniformEXT in correct place for late-combined samplers.
+  * GLSL: Fix KHR subgroup extension table for subgroups.
+  * MSL: Handle reserved identifiers for entry point.
+  * Handle reserved identifiers for functions.
+  * CMake: Disable compiler extensions explicitly.
+  * Handle output IO block initializers more robustly.
+  * More robust handling of initialized output builtin variables.
+  * Minor redundant nit.
+  * GLSL: Handle some extreme edge cases in Output variable initialization.
+  * GLSL: Add test for initializing tess level output.
+  * GLSL: Refactor out Output variable initialization.
+  * MSL: Handle initializers for tess levels.
+  * MSL: Emit correct initializer for tessellation control points.
+  * MSL: Don't flatten builtin arrays unless they're part of IO interface.
+  * MSL: Fix initializer for tess level outputs.
+  * CLI: Add stdin support.
+  * GLSL: Update SPIR-V headers for modified ray tracing opcodes.
+  * GLSL: Fix -Wshadow error.
+  * MSL: Very slight refactor.
+  * MSL: Only consider builtin variables if they are part of IO interface.
+  * MSL: Always enable Outputs in vertex stages.
+  * MSL: Make sure initialized output builtins are considered active.
+  * GLSL: Force block declaration if clip/cull is used in tesc.
+  * Add test for pure initializer gl_FragDepth.
+  * MSL: Always use input_attachment_index for framebuffer fetch binding.
+  * MSL: Fix various bugs with framebuffer fetch on macOS and argument buffers.
+  * Roll dependencies.
+  * CLI: Fix silly regression with handling of -V.
+  * GLSL: Support both SPV_KHR_ray_tracing and NV_ray_tracing.
+  * Fix pathological complexity explosion for certain shaders.
+  * meta: Update copyright headers to 2021.
+  * GLSL: Handle tracing against incoming payload/callable.
+  * Deal better with CompositeExtract from constant composite.
+  * Handle nonuniformEXT qualifier for acceleration structures.
+  * Check entry point variables in is_hidden_variables.
+
+  [ Bill Hollings ]
+  * Expose position invariance.
+
+  [ Hans-Kristian Arntzen ]
+  * HLSL: Add vector to illegal names list.
+  * c: Add missing IOS_SUPPORT_BASE_VERTEX_INSTANCE option.
+  * MSL: Always return [[position]] when required.
+  * MSL: Fixup type when using tessellation levels in TESC functions.
+
+  [ Peng Huang ]
+  * Fix build errors on Windows
+
+  [ Hans-Kristian Arntzen ]
+  * Add comment where aux image atomic buffers are reflected from.
+  * MSL: Refactor out location consumption count computation.
+  * MSL: Gracefully assign automatic input locations to builtin attributes.
+  * MSL: Handle load and store to TessLevel array in TESC.
+
+  [ Peng Huang ]
+  * Add two missing source files
+
+ -- John Zupin <john@odin>  Mon, 22 Feb 2021 15:29:00 -0700
+
 spirv-cross (2020.09.17+122-1lunarg20.04-1) focal; urgency=medium
 
   [ Hans-Kristian Arntzen ]
