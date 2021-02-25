@@ -3,11 +3,11 @@ Upstream-Name: spirv-cross
 Source: https://github.com/KhronosGroup/SPIRV-Cross
 
 Files: *
-Copyright: Copyright 2020 LunarG Inc.
+Copyright: Copyright 2021 LunarG Inc.
 License: Apache-2.0
 
 Files: debian/*
-Copyright: Copyright 2020 LunarG Inc.
+Copyright: Copyright 2021 LunarG Inc.
 License: GPL-3 or MIT or BSD-3-clause
 
 Files: spirv-cross
