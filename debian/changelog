@@ -1,3 +1,9 @@
+spirv-cross (2021.01.15+25~rc2-1lunarg18.04-1) bionic; urgency=medium
+
+  * packaging: updated LunarG's copyrights
+
+ -- John Zupin <john@odin>  Thu, 25 Feb 2021 13:51:51 -0700
+
 spirv-cross (2021.01.15+25~rc1-1lunarg18.04-1) bionic; urgency=medium
 
   [ Hans-Kristian Arntzen ]
