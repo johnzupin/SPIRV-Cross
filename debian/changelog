@@ -1,3 +1,105 @@
+spirv-cross (2021.01.15+124~rc1-1lunarg20.04-1) focal; urgency=medium
+
+  [ Hans-Kristian Arntzen ]
+  * MSL: Deal with pointer-to-pointer qualifier ordering.
+  * Throw if SPIR-V module has no entry points.
+  * GLSL: Add support for Logical subgroup ops.
+  * HLSL: Support logical subgroup ops.
+  * MSL: Add test for logical subgroup arith ops.
+  * Handle edge cases in OpCopyMemory.
+  * GLSL: Handle complex load/store scenarios to gl_SampleMask.
+  * Add GitHub Actions script.
+  * Use Github actions CI tag.
+
+  [ John Zupin ]
+  * packaging: update debian/copyright file
+
+  [ Mehmet Oguz Derin ]
+  * MSL: Support long ulong types in buffers in 2.3+.
+  * Move condition to default block
+
+  [ Hans-Kristian Arntzen ]
+  * Fix Github CI in PRs.
+
+  [ Bill Hollings ]
+  * MSL: Support padding Metal argument buffer entries based on argument index.
+
+  [ lukas.taparauskas ]
+  * c: Add missing API to query active builtins.
+  * c: Remove SPVC_PUBLIC_API prefix from API implementation
+
+  [ Bill Hollings ]
+  * MSL: Fixes to support padding Metal argument buffer entries based on argument index.
+  * MSL: Fixes to support padding Metal argument buffer entries based on argument index.
+  * MSL: Fixes to support padding Metal argument buffer entries based on argument index.
+  * MSL: Fixes to support padding Metal argument buffer entries based on argument index.
+
+  [ Hans-Kristian Arntzen ]
+  * MSVC: Add /bigobj for debug builds.
+  * MSL: Sort builtin IO block members by builtin type.
+  * Clean up member sorting.
+  * MSL: Sketch out API to aid LTO-style optimization.
+  * MSL: Correctly emit array type for masked outputs.
+  * Add --mask-stage-output-* CLI options.
+  * MSL: Do not redirect tess access chains on masked outputs.
+  * MSL: Emit threadgroup storage class for masked control point outputs.
+  * MSL: Handle effective storage for masked CP outputs.
+  * MSL: Do not consider effective storage for any composite.
+  * MSL: Add tests for vertex output masking.
+  * MSL: Force builtin arrays for builtin array types.
+  * MSL: Handle masked outputs in extract_global_variables.
+  * MSL: Don't emit weird reference type for spvUnsafeArray types.
+  * MSL: Emit correct address space for masked arguments.
+  * MSL: Remove position mask tests. They will fail compilation.
+  * MSL: Add tests for masking with --for-tess.
+  * MSL: Refactor out variable/block member masking.
+  * MSL: Fix masking of vertex block outputs.
+  * MSL: Explicitly only consider masked variables to be thread-group-like.
+  * MSL: Test that we can mask location writes in TESC.
+  * MSL: Always emit block variable for block types.
+  * MSL: Small refactors.
+  * MSL: Temporarily allow empty output struct.
+  * MSL: Fix argument_decl check for builtin.
+  * MSL: Do not perform scalar fixups for control-point outputs.
+  * MSL: Emit a masked builtin IO block if necessary.
+  * MSL: Handle masking of builtin control points.
+  * MSL: Do not declare patch variables on stack.
+  * MSL: Handle flattening of patch block outputs as well.
+  * MSL: Rewrite how IO blocks are emitted in multi-patch mode.
+  * MSL: Add test for complex control point outputs.
+  * MSL: Fixup gl_PerVertex names if we're emitting masked builtins.
+  * MSL: Handle masking of TESC IO block members.
+  * MSL: Cleanup fallback IO block emission.
+  * C: Add C api for stage output masking.
+  * MSL: Don't report fallback location allocations as being "used".
+  * Fix print_help comment.
+  * MSL: Fix initialization of masked threadgroup variables.
+  * MSL: Unroll initializations of CullDistance/ClipDistance control points.
+  * MSL: Emit multiple threadgroup slices for multi-patch.
+  * MSL: Handle CullDistance better.
+  * MSL: Test that we can capture cull distance to buffer.
+  * MSL: Correctly analyze if builtin block is active.
+  * MSL: Handle loading Clip/CullDistance in TESE.
+  * MSL: Hoist out to_tesc_invocation_id() in more places.
+  * MSL: Use spvUnsafeArray for builtin arrays after all.
+  * MSL: Make builtin argument type declaration context sensitive.
+  * Check SPIR-V 1.4 rules when reflecting resources.
+  * Support reflecting builtins.
+  * c: Add C API for builtin stage IO reflection.
+  * MSL: Don't emit native array for masked clip/cull distance.
+  * MSL: Don't use native arrays for tess level inputs.
+  * MSL: Fix copy of arrays to/from stage IO variables.
+  * HLSL: Fix automatic location assignment in block IO.
+  * MSL: Handle variable access in OpSelect.
+  * GLSL: Support GL_EXT_shader_image_load_formatted.
+  * GLSL: Implement gl_FragFullyCoveredNV.
+  * GLSL: Support shading rate builtins.
+  * Rewrite how non-uniform qualifiers are handled.
+  * HLSL: Support Shuffle wave ops.
+  * MSL: Use proper array for quad tess levels.
+
+ -- John Zupin <john@odin>  Tue, 27 Apr 2021 13:33:34 -0600
+
 spirv-cross (2021.01.15+25~rc2-1lunarg20.04-1) focal; urgency=medium
 
   * packaging: updated LunarG's copyrights
