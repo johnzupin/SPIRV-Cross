@@ -1,3 +1,97 @@
+spirv-cross (2021.01.15+200~rc1-1lunarg18.04-1) bionic; urgency=medium
+
+  [ Bill Hollings ]
+  * MSL: Padding for Metal argument buffers should not double-count SampledImages.
+
+  [ Lukas Taparauskas ]
+  * MSL: Fix '--msl-multi-patch-workgroup' out of bounds reads when dispatching more threads than control points (#1662)
+
+  [ Przemog1 ]
+  * Fixed 16 bit int types
+
+  [ Hans-Kristian Arntzen ]
+  * Update reference output.
+  * Honor NoContraction qualifier.
+  * HLSL: Implement invariant as precise.
+  * MSL: Handle array of IO variable with Component decoration.
+  * MSL: Handle array with component when we cannot rely on user() attrib.
+  * GLSL: Implement noncoherent framebuffer fetch.
+  * MSL: Improve handling of split tessellation access chains.
+  * MSL: Add CLI option for sampler suffix.
+
+  [ okuoku ]
+  * Fix C sample code in README.md
+
+  [ xndcn ]
+  * Add comment after inf/nan float number for clarifying.
+
+  [ Hans-Kristian Arntzen ]
+  * MSL: Always enable support for base vertex/index on iOS.
+  * Handle odd type for textureGather component.
+  * GLSL: Implement control flow hints.
+  * Ensure loop control flow hints only appear above loops.
+
+  [ Corentin Wallez ]
+  * Fix IVariant -Wdeprecated-copy-with-dtor
+
+  [ Hans-Kristian Arntzen ]
+  * Handle SPIR-V 1.4 selection constructs.
+  * GLSL: Emit num_views for OVR_multiview2.
+  * HLSL: Rewrite how block IO is emitted.
+
+  [ Jon Leech ]
+  * Add missing copyright headers.
+  * Finish adding SPDX tags and setup a reuse checked in Github Actions CI
+  * Actually checkout repo into new reuse job
+  * .gitignore ignored new license text
+
+  [ Hans-Kristian Arntzen ]
+  * Add GLSL.std.450.h to REUSE.
+  * GLSL: Support pervertexNV in NV barycentric extension.
+
+  [ Peter Kasting ]
+  * Fix -Wunreachable-code-aggressive.
+
+  [ SpaceIm ]
+  * fix cross-build to iOS/tvOS/watchOS
+
+  [ Bill Hollings ]
+  * MSL: Fix setting SPIRVCrossDecorationInterpolantComponentExpr decoration.
+
+  [ Hans-Kristian Arntzen ]
+  * MSL: Add test for scalar access chain pull interpolant.
+
+  [ Bill Hollings ]
+  * MSL: Adjust gl_SampleMaskIn for sample-shading and/or fixed sample mask.
+
+  [ Hans-Kristian Arntzen ]
+  * Remove EXPERIMENTAL from JSON reflection backend.
+  * MSL: Remove redundant path for SampleMask.
+  * GLSL: Implement GL_EXT_ray_query.
+  * GLSL: Ensure ray query object decls are flushed if allocated in Function.
+
+  [ Chip Davis ]
+  * MSL: Simplify spvSubgroupBallot().
+
+  [ Hans-Kristian Arntzen ]
+  * GLSL: Emit precise for fp16/fp64 types as well.
+  * Handle value access in terminators.
+
+  [ Bill Hollings ]
+  * MSL: Support row-major transpose when storing matrix from constant RHS matrix.
+  * MSL: Fix casting in constant expressions with different sizes.
+  * MSL: Fix duplicate gl_Position outputs when gl_Position defined but unused.
+  * MSL: Add test for fixes to MSL constant expression type down-casting.
+
+  [ Hans-Kristian Arntzen ]
+  * Track temporary access for OpArrayLength result.
+  * MSL: Consider that function/private variables can be block-like.
+
+  [ John Zupin ]
+  * packaging: rebase and update patches
+
+ -- John Zupin <john@odin>  Fri, 27 Aug 2021 15:33:31 -0600
+
 spirv-cross (2021.01.15+124~rc1-1lunarg18.04-1) bionic; urgency=medium
 
   [ Hans-Kristian Arntzen ]
