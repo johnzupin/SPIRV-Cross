@@ -3,16 +3,19 @@ Date: Tue, 23 Jun 2020 14:52:18 -0600
 Subject: patch: remove Makefile becuase we want to use cmake
 
 ---
- Makefile | 41 -----------------------------------------
- 1 file changed, 41 deletions(-)
+ Makefile | 44 --------------------------------------------
+ 1 file changed, 44 deletions(-)
  delete mode 100644 Makefile
 
 diff --git a/Makefile b/Makefile
 deleted file mode 100644
-index 1f4e00b..0000000
+index b44eb5e..0000000
 --- a/Makefile
 +++ /dev/null
-@@ -1,41 +0,0 @@
+@@ -1,44 +0,0 @@
+-# Copyright 2016-2021 The Khronos Group Inc.
+-# SPDX-License-Identifier: Apache-2.0
+-
 -TARGET := spirv-cross
 -
 -SOURCES := $(wildcard spirv_*.cpp)
