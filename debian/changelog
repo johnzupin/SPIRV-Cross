@@ -1,3 +1,89 @@
+spirv-cross (2021.01.15+276~rc1-1lunarg20.04-1) focal; urgency=medium
+
+  [ Hans-Kristian Arntzen ]
+  * Fix switch fallthrough case in some cases.
+  * GLSL: Emit GL_EXT_buffer_reference_uvec2 as required.
+
+  [ Bill Hollings ]
+  * Add support for additional ops in OpSpecConstantOp.
+  * Add tests for OpSpecConstantOp ops OpQuantizeToF16 and OpSRem.
+  * MSL: Return fragment function value even when last SPIR-V Op is discard (OpKill).
+  * MSL: Add explanatory comment requested in PR review.
+  * MSL: Fix location and component variable matching between shader stages.
+  * MSL: Selectively enable fast-math in MSL code to match Vulkan CTS results.
+
+  [ Hans-Kristian Arntzen ]
+  * Remove obsolete Travis CI YML.
+  * Remove tests for Ubuntu 16.04.
+
+  [ Bill Hollings ]
+  * MSL: Track location component to match vecsize between shader stages.
+  * MSL: Honor DecorationNoContraction when compiling using fast-math.
+  * MSL: Honor infinities in OpQuantizeToF16 when compiling using fast-math.
+  * MSL: Consolidate spvQuantizeToF16() functions into a single template function.
+  * MSL: Use vec<T, n> in template SpvHalfTypeSelector for function spvQuantizeToF16().
+  * MSL: Support synthetic functions in function constants.
+
+  [ Hans-Kristian Arntzen ]
+  * MSVC: Workaround crtdbg macroing free().
+  * CLI/HLSL: Don't set explicit binding for synthesized NumWorkgroups CBV.
+  * HLSL: Ensure synthetic NumWorkgroups variable is considered active.
+  * Improve handling of INT_MIN/INT64_MIN literals.
+  * Fix wrong detection of trivial_mix_op.
+  * Test behavior around OpSelect with matrices.
+
+  [ 丛越 ]
+  * Support Metal 2.4 Intersection Query, Implement GL_EXT_ray_query.
+
+  [ Bill Hollings ]
+  * Per spec, support undefined behavior for out-of-bounds swizzles.
+
+  [ 丛越 ]
+  * Fix all requested changes, test_shaders.py supports compiling MSL 2.4 shaders, and the Intersection Query currently only supports MSL 2.4 on the iOS platform.
+  * Fix unsupported exceptions for ConvertUToAccelerationStructure & BindingTableRecordOffset.
+
+  [ Hans-Kristian Arntzen ]
+  * MSL: Fix some trivial bugs not caught by CI when adding ray query.
+  * MSL: Remove some redundant breaks.
+  * MSL: Never used templated array for RayQuery objects.
+
+  [ Bill Hollings ]
+  * MSL: Support more usecases for unpacked vectors.
+
+  [ Taylor Holliday ]
+  * Add Package.swift.
+
+  [ Erfan Ahmadi ]
+  * SPIRV-Cross contribution needed for `INTEL_fragment_shader_ordering`
+
+  [ Hans-Kristian Arntzen ]
+  * MSL: Workaround compiler crashes when using threadgroup bool.
+
+  [ Bill Hollings ]
+  * MSL: Fix type redirection when struct members are reordered to align with offsets.
+  * MSL: Remove over-zealous check for struct packing compatibility.
+
+  [ Hans-Kristian Arntzen ]
+  * Always use https protocol when cloning external test deps.
+
+  [ Bill Hollings ]
+  * MSL: Correctly emit user(clip/cullN) for clip/cull builtins in tess output struct.
+
+  [ Edvin Pettersson ]
+  * Fixed potential compilation error in spirv_cross_containers.hpp
+
+  [ Hans-Kristian Arntzen ]
+  * Correctly reflect declared buffer size for out of order members.
+  * Handle Modf/Frexp in more cases.
+  * MSL: Handle non-thread storage class in Modf/Frexp pointer versions.
+  * CFG: Handle degenerate selection constructs.
+  * GLSL: Deal with buffer_reference_align.
+
+  [ Bill Hollings ]
+  * Separate (partially) the tracking of depth images from depth compare ops.
+
+ -- John Zupin <john@odin>  Tue, 16 Nov 2021 16:15:46 -0700
+
 spirv-cross (2021.01.15+200~rc1-1lunarg20.04-1) focal; urgency=medium
 
   [ Bill Hollings ]
