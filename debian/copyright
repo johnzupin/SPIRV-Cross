@@ -3,7 +3,7 @@ Upstream-Name: spirv-cross
 Source: https://github.com/KhronosGroup/SPIRV-Cross
 
 Files: *
-Copyright: 2021, LunarG Inc
+Copyright: 2022, LunarG Inc
 License: Apache-2.0
 
 Files: CMakeLists.txt
@@ -38,7 +38,7 @@ Copyright: 2015-2017, ARM Limited
 License: Apache-2.0
 
 Files: debian/*
-Copyright: 2021, LunarG Inc
+Copyright: 2022, LunarG Inc
 License: BSD-3-clause or GPL-3 or MIT
 
 Files: GLSL.std.450.h
