@@ -1050,10 +1050,12 @@ void Compiler::parse_fixup()
 		if (id.get_type() == TypeConstant)
 		{
 			auto &c = id.get<SPIRConstant>();
-			if (ir.meta[c.self].decoration.builtin && ir.meta[c.self].decoration.builtin_type == BuiltInWorkgroupSize)
+			if (has_decoration(c.self, DecorationBuiltIn) &&
+			    BuiltIn(get_decoration(c.self, DecorationBuiltIn)) == BuiltInWorkgroupSize)
 			{
 				// In current SPIR-V, there can be just one constant like this.
 				// All entry points will receive the constant value.
+				// WorkgroupSize take precedence over LocalSizeId.
 				for (auto &entry : ir.entry_points)
 				{
 					entry.second.workgroup_size.constant = c.self;
@@ -1659,6 +1661,39 @@ SPIRBlock::ContinueBlockType Compiler::continue_block_type(const SPIRBlock &bloc
 	}
 }
 
+const SmallVector<SPIRBlock::Case> &Compiler::get_case_list(const SPIRBlock &block) const
+{
+	uint32_t width = 0;
+
+	// First we check if we can get the type directly from the block.condition
+	// since it can be a SPIRConstant or a SPIRVariable.
+	if (const auto *constant = maybe_get<SPIRConstant>(block.condition))
+	{
+		const auto &type = get<SPIRType>(constant->constant_type);
+		width = type.width;
+	}
+	else if (const auto *var = maybe_get<SPIRVariable>(block.condition))
+	{
+		const auto &type = get<SPIRType>(var->basetype);
+		width = type.width;
+	}
+	else
+	{
+		auto search = ir.load_type_width.find(block.condition);
+		if (search == ir.load_type_width.end())
+		{
+			SPIRV_CROSS_THROW("Use of undeclared variable on a switch statement.");
+		}
+
+		width = search->second;
+	}
+
+	if (width > 32)
+		return block.cases_64bit;
+
+	return block.cases_32bit;
+}
+
 bool Compiler::traverse_all_reachable_opcodes(const SPIRBlock &block, OpcodeHandler &handler) const
 {
 	handler.set_current_block(block);
@@ -2123,6 +2158,12 @@ void Compiler::set_execution_mode(ExecutionMode mode, uint32_t arg0, uint32_t ar
 		execution.workgroup_size.z = arg2;
 		break;
 
+	case ExecutionModeLocalSizeId:
+		execution.workgroup_size.id_x = arg0;
+		execution.workgroup_size.id_y = arg1;
+		execution.workgroup_size.id_z = arg2;
+		break;
+
 	case ExecutionModeInvocations:
 		execution.invocations = arg0;
 		break;
@@ -2150,6 +2191,7 @@ uint32_t Compiler::get_work_group_size_specialization_constants(SpecializationCo
 	y = { 0, 0 };
 	z = { 0, 0 };
 
+	// WorkgroupSize builtin takes precedence over LocalSize / LocalSizeId.
 	if (execution.workgroup_size.constant != 0)
 	{
 		auto &c = get<SPIRConstant>(execution.workgroup_size.constant);
@@ -2172,6 +2214,29 @@ uint32_t Compiler::get_work_group_size_specialization_constants(SpecializationCo
 			z.constant_id = get_decoration(c.m.c[0].id[2], DecorationSpecId);
 		}
 	}
+	else if (execution.flags.get(ExecutionModeLocalSizeId))
+	{
+		auto &cx = get<SPIRConstant>(execution.workgroup_size.id_x);
+		if (cx.specialization)
+		{
+			x.id = execution.workgroup_size.id_x;
+			x.constant_id = get_decoration(execution.workgroup_size.id_x, DecorationSpecId);
+		}
+
+		auto &cy = get<SPIRConstant>(execution.workgroup_size.id_y);
+		if (cy.specialization)
+		{
+			y.id = execution.workgroup_size.id_y;
+			y.constant_id = get_decoration(execution.workgroup_size.id_y, DecorationSpecId);
+		}
+
+		auto &cz = get<SPIRConstant>(execution.workgroup_size.id_z);
+		if (cz.specialization)
+		{
+			z.id = execution.workgroup_size.id_z;
+			z.constant_id = get_decoration(execution.workgroup_size.id_z, DecorationSpecId);
+		}
+	}
 
 	return execution.workgroup_size.constant;
 }
@@ -2181,15 +2246,42 @@ uint32_t Compiler::get_execution_mode_argument(spv::ExecutionMode mode, uint32_t
 	auto &execution = get_entry_point();
 	switch (mode)
 	{
+	case ExecutionModeLocalSizeId:
+		if (execution.flags.get(ExecutionModeLocalSizeId))
+		{
+			switch (index)
+			{
+			case 0:
+				return execution.workgroup_size.id_x;
+			case 1:
+				return execution.workgroup_size.id_y;
+			case 2:
+				return execution.workgroup_size.id_z;
+			default:
+				return 0;
+			}
+		}
+		else
+			return 0;
+
 	case ExecutionModeLocalSize:
 		switch (index)
 		{
 		case 0:
-			return execution.workgroup_size.x;
+			if (execution.flags.get(ExecutionModeLocalSizeId) && execution.workgroup_size.id_x != 0)
+				return get<SPIRConstant>(execution.workgroup_size.id_x).scalar();
+			else
+				return execution.workgroup_size.x;
 		case 1:
-			return execution.workgroup_size.y;
+			if (execution.flags.get(ExecutionModeLocalSizeId) && execution.workgroup_size.id_y != 0)
+				return get<SPIRConstant>(execution.workgroup_size.id_y).scalar();
+			else
+				return execution.workgroup_size.y;
 		case 2:
-			return execution.workgroup_size.z;
+			if (execution.flags.get(ExecutionModeLocalSizeId) && execution.workgroup_size.id_z != 0)
+				return get<SPIRConstant>(execution.workgroup_size.id_z).scalar();
+			else
+				return execution.workgroup_size.z;
 		default:
 			return 0;
 		}
@@ -3057,12 +3149,15 @@ void Compiler::AnalyzeVariableScopeAccessHandler::set_current_block(const SPIRBl
 		break;
 
 	case SPIRBlock::MultiSelect:
+	{
 		notify_variable_access(block.condition, block.self);
-		for (auto &target : block.cases)
+		auto &cases = compiler.get_case_list(block);
+		for (auto &target : cases)
 			test_phi(target.block);
 		if (block.default_block)
 			test_phi(block.default_block);
 		break;
+	}
 
 	default:
 		break;
@@ -4733,6 +4828,12 @@ void Compiler::force_recompile()
 	is_force_recompile = true;
 }
 
+void Compiler::force_recompile_guarantee_forward_progress()
+{
+	force_recompile();
+	is_force_recompile_forward_progress = true;
+}
+
 bool Compiler::is_forcing_recompilation() const
 {
 	return is_force_recompile;
@@ -4741,6 +4842,7 @@ bool Compiler::is_forcing_recompilation() const
 void Compiler::clear_force_recompile()
 {
 	is_force_recompile = false;
+	is_force_recompile_forward_progress = false;
 }
 
 Compiler::PhysicalStorageBufferPointerHandler::PhysicalStorageBufferPointerHandler(Compiler &compiler_)

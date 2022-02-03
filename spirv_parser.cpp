@@ -68,6 +68,7 @@ static bool is_valid_spirv_version(uint32_t version)
 	case 0x10300: // SPIR-V 1.3
 	case 0x10400: // SPIR-V 1.4
 	case 0x10500: // SPIR-V 1.5
+	case 0x10600: // SPIR-V 1.6
 		return true;
 
 	default:
@@ -341,6 +342,22 @@ void Parser::parse(const Instruction &instruction)
 		default:
 			break;
 		}
+		break;
+	}
+
+	case OpExecutionModeId:
+	{
+		auto &execution = ir.entry_points[ops[0]];
+		auto mode = static_cast<ExecutionMode>(ops[1]);
+		execution.flags.set(mode);
+
+		if (mode == ExecutionModeLocalSizeId)
+		{
+			execution.workgroup_size.id_x = ops[2];
+			execution.workgroup_size.id_y = ops[3];
+			execution.workgroup_size.id_z = ops[4];
+		}
+
 		break;
 	}
 
@@ -1018,8 +1035,21 @@ void Parser::parse(const Instruction &instruction)
 		current_block->condition = ops[0];
 		current_block->default_block = ops[1];
 
-		for (uint32_t i = 2; i + 2 <= length; i += 2)
-			current_block->cases.push_back({ ops[i], ops[i + 1] });
+		uint32_t remaining_ops = length - 2;
+		if ((remaining_ops % 2) == 0)
+		{
+			for (uint32_t i = 2; i + 2 <= length; i += 2)
+				current_block->cases_32bit.push_back({ ops[i], ops[i + 1] });
+		}
+
+		if ((remaining_ops % 3) == 0)
+		{
+			for (uint32_t i = 2; i + 3 <= length; i += 3)
+			{
+				uint64_t value = (static_cast<uint64_t>(ops[i + 1]) << 32) | ops[i];
+				current_block->cases_64bit.push_back({ value, ops[i + 2] });
+			}
+		}
 
 		// If we jump to next block, make it break instead since we're inside a switch case block at that point.
 		ir.block_meta[current_block->next_block] |= ParsedIR::BLOCK_META_MULTISELECT_MERGE_BIT;
@@ -1177,6 +1207,14 @@ void Parser::parse(const Instruction &instruction)
 	// Actual opcodes.
 	default:
 	{
+		if (length >= 2)
+		{
+			const auto *type = maybe_get<SPIRType>(ops[0]);
+			if (type)
+			{
+				ir.load_type_width.insert({ ops[1], type->width });
+			}
+		}
 		if (!current_block)
 			SPIRV_CROSS_THROW("Currently no block to insert opcode.");
 
