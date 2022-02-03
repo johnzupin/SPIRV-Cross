@@ -1,3 +1,59 @@
+spirv-cross (2021.01.15+359~rc1-1lunarg20.04-1) focal; urgency=medium
+
+  [ Sebastián Aedo ]
+  * Add 64 bit support for OpSwitch
+  * Removing logic in the parser
+  * Removed unnecessary tracking of types.
+  * Fixed wrong condition and formatting.
+  * Cast the switch selector in GLSL to uint32_t
+  * Added block.cases_32bit and reworked the cases fix
+
+  [ Bill Hollings ]
+  * MSL: Don't output depth and stencil values with explicit early fragment tests.
+
+  [ Sebastián Aedo ]
+  * Removed tracking of OpConstant and OpPhi.
+
+  [ xinhou ]
+  * ESSL: Vertex shader input doesn't support array types.
+
+  [ Sebastián Aedo ]
+  * MSL: Add 64 bit switch support
+  * Clamp vector element access to vector size.
+  * test_shaders: Add the option to generate diff instead.
+
+  [ Nikita Fediuchin ]
+  * Fix incorrect MSL gl_TessCoord variable type
+  * Fix gl_TessCoord arguments presence. Update reference shaders.
+
+  [ chirsz-ever ]
+  * MSL: Allow copy array from UniformConstant storage
+
+  [ Hans-Kristian Arntzen ]
+  * MSL: Move float2->3 TessCoord fixup to a better location.
+  * Roll dependencies.
+  * Test: Add --allow-localsizeid flag for spirv-val.
+  * Add support for LocalSizeId.
+  * Add sanity test for SPIR-V 1.6 modules.
+
+  [ miomioreimu ]
+  * fix: GL_EXT_texture_buffer is more common than GL_OES_texture_buffer
+
+  [ Hans-Kristian Arntzen ]
+  * Update references for GL_EXT_texture_buffer.
+  * Do not forward expressions which carry a huge amount of dependencies.
+  * Rework how loop iteration counts are validated.
+  * MSL: Handle signed atomic min/max.
+  * MSL: Handle constant construct of block-like array types.
+  * Handle aliased names in spec constants.
+  * Test aliased names in declared LUTs.
+  * MSL: Rethink how opaque descriptors are passed to leaf functions.
+
+  [ John Zupin ]
+  * packaging: update copyright
+
+ -- John Zupin <john@odin>  Thu, 03 Feb 2022 14:24:01 -0700
+
 spirv-cross (2021.01.15+276~rc1-1lunarg20.04-1) focal; urgency=medium
 
   [ Hans-Kristian Arntzen ]
