@@ -1,3 +1,85 @@
+spirv-cross (2021.01.15+388~rc1-1lunarg20.04-1) focal; urgency=medium
+
+  [ Rodolphe ]
+  * [Spirv_msl] Fix normalize on half3/half2 (#1856)
+
+  [ Hans-Kristian Arntzen ]
+  * Update documentation for descriptor set support in MSL/HLSL.
+  * GLSL: Ensure correct signed integer type for more texture functions.
+  * Do not emit hoisted access chain temporaries unless backend supports it.
+  * Fix regression from adding 64-bit switch support.
+  * Add debug option to modify maximum number of compile iterations.
+  * Add more scenarios where we can guarantee forward progress.
+
+  [ Shintaro Sakahara ]
+  * HLSL: Make --flatten-ubo work correctly
+
+  [ xndcn ]
+  * MSL: append entry point args to local variable names to avoid conflicts
+
+  [ Alex Brachet ]
+  * Qualify move as std::move
+
+  [ Hans-Kristian Arntzen ]
+  * MSL: Refactor and fix use of quadgroup vs simdgroup.
+  * HLSL: Do not emit VPOS fixup unless position is active.
+
+  [ Daniel Thornburgh ]
+  * Qualify std::move.
+
+  [ Bill Hollings ]
+  * MSL: Support input/output blocks containing nested struct arrays
+  * MSL: Non-functional fixes from PR code review.
+  * MSL: Fix var names in test shaders to avoid reserved identifiers.
+  * MSL: Document clarification of location incrementing.
+
+  [ Hans-Kristian Arntzen ]
+  * Fix formatting nits from review.
+  * Handle OpTerminateInvocation.
+  * Add relax_nan_checks options.
+
+  [ Pedro J. Estébanez ]
+  * HLSL: Add support for gl_HelperInvocation
+
+  [ Hans-Kristian Arntzen ]
+  * HLSL: Implement HelperInvocationEXT.
+  * HLSL: Add test for HelperInvocation.
+  * Remove forwardable bit in SPIRVariable.
+  * Consider Volatile in should_forward().
+  * Add test for SPIR-V 1.6 Volatile HelperInvocation.
+  * MSL: Consider that gl_IsHelperInvocation can be Volatile.
+
+  [ Pedro J. Estébanez ]
+  * HLSL: Fix Helper Invocation wrongly allowed in compute.
+
+  [ Bill Hollings ]
+  * MSL: Use var name instead of var-type name for flattened interface members.
+
+  [ Hans-Kristian Arntzen ]
+  * MSL: Fix minor nits.
+  * MSL: Handle aliased variable names for resources placed in IB struct.
+  * Fixup names of anonymous inner structs.
+  * Avoid redundant meta lookups in ParsedIR when setting member decorations.
+
+  [ Konstantin Pail ]
+  * VK_KHR_ray_query implementation
+
+  [ Hans-Kristian Arntzen ]
+  * MSL: Handle awkward mix and match of Offset / ArrayStride in constants.
+  * HLSL: Update test from review.
+  * HLSL: Disable FXC testing for rayquery shaders.
+
+  [ Bill Hollings ]
+  * Allow volatile vars that are not builtins to be forwarded.
+
+  [ Roy.li ]
+  * Use types have same widths in loop condition.
+
+  [ Hans-Kristian Arntzen ]
+  * MSL: Fix goofy bugs in ray query.
+
+ -- john <john@odin>  Mon, 11 Apr 2022 11:30:17 -0600
+
 spirv-cross (2021.01.15+359~rc1-1lunarg20.04-1) focal; urgency=medium
 
   [ Sebastián Aedo ]
