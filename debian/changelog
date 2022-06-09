@@ -1,3 +1,53 @@
+spirv-cross (2021.01.15+434~rc1-1lunarg18.04-1) bionic; urgency=medium
+
+  [ skksdkfak ]
+  * Translate gl_PrimitiveID to SV_PrimitiveID.
+
+  [ Pedro J. Estébanez ]
+  * HLSL: Implement ViewIndex.
+
+  [ Hans-Kristian Arntzen ]
+  * MSL: Pass down global RayQuery object to leaf functions.
+  * GLSL: Support GL_EXT_debug_printf.
+
+  [ Stefan Lienhard ]
+  * cli: display missing memory qualifiers for reflect and dump-resources
+  * add qualifiers to reference reflect json output
+  * remove newline at eof
+
+  [ Bill Hollings ]
+  * MSL: Emit interface block members of array length 1 as arrays instead of scalars.
+
+  [ Hans-Kristian Arntzen ]
+  * Handle early reads from loop variables with initializers.
+  * HLSL: Add more comprehensible reserved identifier list.
+
+  [ Laura Hermanns ]
+  * HLSL: Add missing BuiltInLayer to HLSL backend.
+
+  [ Hans-Kristian Arntzen ]
+  * GLSL: Clean up some ways of querying decoration flags.
+  * GLSL: Handle more proper semantics for RelaxedPrecision.
+  * Refactor out query for operation type/result IDs.
+  * Add --stage handling for ray tracing.
+  * GLSL: Do not analyze precision for Undef variables.
+  * MSL: Potentially cast loaded Input variables.
+  * GLSL: Don't apply Grad LOD workarounds for fetch.
+  * Attempt more optimal codegen for OpCompositeInsert.
+  * Add tests for OpCompositeInsert edge cases.
+  * Promote Unreachable cases into break to avoid fallthrough.
+
+  [ iwubcode ]
+  * HLSL: fix BuiltInLayer to emit semantic 'SV_RenderTargetArrayIndex' instead of 'SV_RenderTargetIndex'
+
+  [ Hans-Kristian Arntzen ]
+  * GLSL: Implement 1D texture emulation for ES.
+  * GLSL: Add basic support for GL_EXT_shader_atomic_float.
+  * Roll dependencies.
+  * Emit KHR barycentrics if source enables the KHR extension.
+
+ -- john <john@odin>  Thu, 09 Jun 2022 09:30:25 -0600
+
 spirv-cross (2021.01.15+388~rc1-1lunarg18.04-1) bionic; urgency=medium
 
   [ Rodolphe ]
