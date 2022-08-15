@@ -1,3 +1,58 @@
+spirv-cross (2021.01.15+477~rc1-1lunarg20.04-1) focal; urgency=medium
+
+  [ vkaytsanov ]
+  * Fix missing function in README sample
+
+  [ Hans-Kristian Arntzen ]
+  * Fix control flow bug where we missed continue;
+  * GLSL: Add missing KHR barycentric references.
+  * GLSL: Add more extension ladder fallbacks for unusual integer sizes.
+
+  [ Pedro J. Estébanez ]
+  * HLSL: Implement bit casts between Half and UShort.
+
+  [ Hans-Kristian Arntzen ]
+  * GLSL: Handle forced temporary OpConvertUToAccelerationStructureKHR.
+
+  [ Sergii Penner ]
+  * Fix typo
+
+  [ Bill Hollings ]
+  * MSL: Add support for SPV_KHR_physical_storage_buffer extension.
+
+  [ Frédéric Wang ]
+  * Fix compilation errors with deprecated sprintf function
+  * Keep using sprintf on windows.
+  * address more review comments
+
+  [ Bill Hollings ]
+  * MSL: Fixes from review for SPV_KHR_physical_storage_buffer extension.
+  * MSL: Fixes from review for SPV_KHR_physical_storage_buffer extension.
+  * MSL: Fix implicit conversion precision build error.
+
+  [ Hans-Kristian Arntzen ]
+  * Handle PHI in collapsed switch constructs.
+  * HLSL: Add option to emit entry point name 1:1 instead of main().
+
+  [ Pedro J. Estébanez ]
+  * HLSL: Implement GroupOperation(Inclusive/Exclusive)Scan.
+
+  [ Hans-Kristian Arntzen ]
+  * Avoid detection of false loop variables.
+  * Handle collapsed loops similar to collapsed selections.
+  * Handle multiple breaks out of switches.
+
+  [ Chip Davis ]
+  * MSL: Also replace `bool` with `short` in structures.
+  * MSL: Use a wrapper type for matrices in workgroup storage.
+
+  [ Hans-Kristian Arntzen ]
+  * Fix minor style nit from review.
+  * Do not optimize OpCompositeInsert for hoisted temporaries.
+  * MSL: Fix various bugs with Ptr/U bitcasts.
+
+ -- john <john@odin>  Mon, 15 Aug 2022 13:33:29 -0600
+
 spirv-cross (2021.01.15+434~rc1-1lunarg20.04-1) focal; urgency=medium
 
   [ skksdkfak ]
