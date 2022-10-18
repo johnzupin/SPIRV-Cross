@@ -1,3 +1,53 @@
+spirv-cross (2021.01.15+517~rc1-1lunarg22.04-1) jammy; urgency=medium
+
+  [ Yuwen Wu ]
+  * Don't rename remapped variables like 'gl_LastFragDepthARM'
+  * GLSL: disable row major load around on GLES.
+  * Skip remapped vars in 'fixup_reserved_names'
+  * GLSL: added an option to disable row-major-load workaround.
+
+  [ Hans-Kristian Arntzen ]
+  * Update dependencies.
+  * Update SPIR-V headers.
+  * Update glslang reference.
+  * GLSL: Implement GL_EXT_mesh_shader.
+  * GLSL: Implement task shaders.
+
+  [ FrankXie ]
+  * Add vcpkg installation instructions
+
+  [ Chip Davis ]
+  * MSL: Add a mechanism to fix up shader outputs.
+
+  [ Hans-Kristian Arntzen ]
+  * Update glslang/spirv-tools.
+  * Update mesh/task test references.
+
+  [ Yuwen Wu ]
+  * MSL: only fix up gl_FragCoord if really necessary.
+
+  [ Bill Hollings ]
+  * MSL: Support OpPtrEqual, OpPtrNotEqual, and OpPtrDiff.
+
+  [ Aaron Siegel ]
+  * GLSL: Account for ES sampler1D to sampler2D promotion in textureSize.
+
+  [ Hans-Kristian Arntzen ]
+  * MSL: Handle descriptor aliasing of raw buffer descriptors.
+  * MSL: Do not attempt to alias push constants.
+  * MSL: Report unsupported 64-bit atomics.
+  * MSL: Add more keywords to reserved set.
+
+  [ Bill Hollings ]
+  * MSL: Emit correct address space when casting during OpStore.
+
+  [ Hans-Kristian Arntzen ]
+  * Add reflection support for shader record buffers.
+  * MSL: Expose way to query if a buffer needs array length.
+  * HLSL: Improve support for VertexInfo aux struct.
+
+ -- john <john@odin>  Tue, 18 Oct 2022 10:26:00 -0600
+
 spirv-cross (2021.01.15+477~rc1-1lunarg20.04-1) focal; urgency=medium
 
   [ vkaytsanov ]
