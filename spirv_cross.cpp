@@ -725,7 +725,7 @@ bool Compiler::InterfaceVariableAccessHandler::handle(Op opcode, const uint32_t 
 
 	case OpExtInst:
 	{
-		if (length < 5)
+		if (length < 3)
 			return false;
 		auto &extension_set = compiler.get<SPIRExtension>(args[2]);
 		switch (extension_set.ext)
@@ -2343,6 +2343,11 @@ bool Compiler::is_vertex_like_shader() const
 bool Compiler::is_tessellation_shader() const
 {
 	return is_tessellation_shader(get_execution_model());
+}
+
+bool Compiler::is_tessellating_triangles() const
+{
+	return get_execution_mode_bitset().get(ExecutionModeTriangles);
 }
 
 void Compiler::set_remapped_variable_state(VariableID id, bool remap_enable)
