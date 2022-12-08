@@ -1,3 +1,52 @@
+spirv-cross (2021.01.15+558~rc1-1lunarg20.04-1) focal; urgency=medium
+
+  [ Chip Davis ]
+  * MSL: Support "raw" buffer input in tessellation evaluation shaders.
+  * MSL: Don't flatten arrayed per-patch output blocks in tessellation shaders.
+  * MSL: Account for composite types when assigning locations.
+
+  [ Hans-Kristian Arntzen ]
+  * MSL: Handle partial access chains with array-of-UBO/SSBO.
+  * HLSL: Add option to bind vertex input smemantics by name.
+  * MSL: Fix restrict vs __restrict incompatibility.
+  * MSL: Handle implicit integer promotion rules.
+  * Roll glslang dependency.
+
+  [ Chip Davis ]
+  * MSL: Implement `CompositeInsert` `OpSpecConstantOp`.
+
+  [ Try ]
+  * HLSL: Implement VK_EXT_mesh_shader
+
+  [ Hans-Kristian Arntzen ]
+  * Fixup glslang reference.
+  * HLSL: Add missing reference for mesh shader test.
+  * HLSL: Fix-up some style issues from review.
+  * HLSL: Fix some warnings from review.
+  * HLSL: Some cleanups and fixes in analyze_meshlet_writes.
+  * HLSL: Make sure to test deeply nested functions in mesh shaders.
+  * HLSL: Handle case where PerVertex block is not used.
+  * GLSL: Add test for mesh with non-block builtin IO.
+  * HLSL: Do not support ClipCull size > 4 in mesh shaders.
+  * HLSL: Fix test for non-block per-primitive IO.
+  * Handle ShaderDebugInfo non-semantic extension.
+
+  [ Chip Davis ]
+  * MSL: Manually update `BuiltInHelperInvocation` when a fragment is discarded.
+  * MSL: Add missing casts to `Op?MulExtended`.
+  * MSL: Prevent stores to storage resources in discarded fragments.
+  * GLSL, MSL: Handle `OpUndef` as part of a constant composite.
+  * Interleave undef values with constants and types.
+  * MSL: Don't dereference forwarded copies of `OpVariable` pointers.
+
+  [ Dunfan Lu ]
+  * Fix MSL Access Chain
+
+  [ Hans-Kristian Arntzen ]
+  * MSL: Refactor member reference in terms of one boolean.
+
+ -- john <john@odin>  Thu, 08 Dec 2022 10:44:27 -0700
+
 spirv-cross (2021.01.15+517~rc1-1lunarg20.04-1) focal; urgency=medium
 
   [ Yuwen Wu ]
