@@ -3,30 +3,6 @@ Upstream-Name: spirv-cross
 Source: https://github.com/KhronosGroup/SPIRV-Cross
 
 Files: *
-Copyright: 2022, LunarG Inc
-License: Apache-2.0
-
-Files: CMakeLists.txt
-       LICENSE
-       gn/*
-       include/*
-       main.cpp
-       samples/cpp/atomics.cpp
-       samples/cpp/multiply.cpp
-       samples/cpp/shared.cpp
-       spirv_cfg.cpp
-       spirv_cpp.cpp
-       spirv_cross.cpp
-       spirv_cross_c.cpp
-       spirv_cross_parsed_ir.cpp
-       spirv_cross_util.cpp
-       spirv_glsl.cpp
-       spirv_hlsl.cpp
-       spirv_msl.cpp
-       spirv_parser.cpp
-       spirv_reflect.cpp
-       test_shaders.py
-       tests-other/small_vector.cpp
 Copyright: 2015-2017, ARM Limited
            2015-2021, Arm Limited
            2018-2021, Bradley Austin Davis
@@ -35,16 +11,79 @@ Copyright: 2015-2017, ARM Limited
            2019-2021, Hans-Kristian Arntzen
            2016-2021, Robert Konrad
            2016-2021, The Brenwill Workshop Ltd
-License: Apache-2.0
+           2016-2021, The Khronos Group, Inc
+License: Apache-2 or Apache-2.0
 
-Files: debian/*
-Copyright: 2022, LunarG Inc
-License: BSD-3-clause or GPL-3 or MIT
+Files: .clang-format
+       .github/*
+       LICENSES/Apache-2.0.txt
+       Makefile
+       Package.swift
+       appveyor.yml
+       build_glslang_spirv_tools.sh
+       checkout_glslang_spirv_tools.sh
+       cmake/*
+       format_all.sh
+       gn/*
+       include/*
+       pkg-config/*
+       samples/cpp/Makefile
+       samples/cpp/atomics.comp
+       samples/cpp/multiply.comp
+       samples/cpp/shared.comp
+       shaders-msl/comp/buffer_device_address.msl2.comp
+       shaders-msl/vert/buffer_device_address.msl2.vert
+       spirv_cfg.hpp
+       spirv_common.hpp
+       spirv_cpp.hpp
+       spirv_cross.hpp
+       spirv_cross_c.h
+       spirv_cross_containers.hpp
+       spirv_cross_error_handling.hpp
+       spirv_cross_parsed_ir.hpp
+       spirv_cross_util.hpp
+       spirv_glsl.hpp
+       spirv_hlsl.hpp
+       spirv_msl.hpp
+       spirv_parser.hpp
+       spirv_reflect.hpp
+       test_shaders.sh
+       update_test_shaders.sh
+Copyright: 2015-2017, ARM Limited
+           2015-2021, Arm Limited
+           2018-2021, Bradley Austin Davis
+           2019, Google, Inc
+           2019-2021, Hans-Kristian Arntzen
+           2016-2021, Robert Konrad
+           2016-2021, The Brenwill Workshop Ltd
+           2016-2021, The Khronos Group Inc
+           2020-2021, The Khronos Group, Inc
+License: Apache-2
+
+Files: LICENSES/MIT.txt
+       spirv.h
+       spirv.hpp
+Copyright: 2014-2020, The Khronos Group Inc
+License: MIT/X11
+
+Files: CODE_OF_CONDUCT.adoc
+       README.md
+Copyright: 2016-2020, The Khronos Group Inc
+           2020-2021, The Khronos Group, Inc
+License: CC-BY-4
 
 Files: GLSL.std.450.h
 Copyright: 2014-2016, Copyright (c)The Khronos Group Inc
            2014-2016, The Khronos Group Inc
+           2014-2021, The Khronos Group, Inc
 License: Khronos
+
+Files: debian/*
+Copyright: 2023, LunarG Inc <johnz@lunarg.com>
+License: BSD-3-clause or GPL-3 or MIT
+
+License: Apache-2
+Comment: Add the corresponding license text here
 
 License: Apache-2.0
  Apache License
@@ -261,6 +300,9 @@ License: BSD-3-clause
  3. Neither the name of the copyright holder nor the names of its contributors may be used to endorse or promote products derived from this software without specific prior written permission.
  .
  THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+
+License: CC-BY-4
+Comment: Add the corresponding license text here
 
 License: GPL-3
  GNU GENERAL PUBLIC LICENSE
