@@ -1,3 +1,49 @@
+spirv-cross (2021.01.15+588~rc1-1lunarg22.04-1) jammy; urgency=medium
+
+  [ Hans-Kristian Arntzen ]
+  * Add C API option for enable row major workaround.
+  * GLSL: Fix row-major workaround wrapper for ES.
+  * CFG: Handle implied access to opaque loaded values.
+
+  [ Bill Hollings ]
+  * MSL: Add support for writable images in iOS Tier2 argument buffers.
+
+  [ Laura Hermanns ]
+  * Fixed typo in CompilerGLSL::should_dereference()
+
+  [ Hans-Kristian Arntzen ]
+  * Fix GCC5 build.
+
+  [ Bill Hollings ]
+  * Fixes from code review of adding writable images to iOS Tier2 argument buffers.
+
+  [ Loic Sharma ]
+  * Accept no ops
+
+  [ Hans-Kristian Arntzen ]
+  * Roll dependencies.
+  * Add tests for loops compiled with debug semantics.
+  * Update test for updated block_is_noop check.
+  * Also consider NonSemantic ExtInst in block_is_noop.
+  * Refactor PHI checks into block_is_noop instead.
+  * GLSL: Declare gl_in/gl_out as array more robustly.
+  * GLSL: Handle textureGatherOffsets properly.
+  * Updates for main branch rename.
+
+  [ rdb ]
+  * GLSL/HLSL: Add legacy handling for int vertex attributes
+
+  [ Hans-Kristian Arntzen ]
+  * Fix misc compilation issues with std::max.
+
+  [ rdb ]
+  * GLSL: Support GL_NV_shader_noperspective_interpolation in GLES
+
+  [ John Zupin ]
+  * packaging: debian: update copyright
+
+ -- john <john@odin>  Mon, 23 Jan 2023 11:53:55 -0700
+
 spirv-cross (2021.01.15+558~rc1-1lunarg22.04-1) jammy; urgency=medium
 
   [ Chip Davis ]
