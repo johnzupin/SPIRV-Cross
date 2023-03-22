@@ -1,3 +1,72 @@
+spirv-cross (2021.01.15+688~rc1-1lunarg22.04-1) jammy; urgency=medium
+
+  [ rdb ]
+  * HLSL: Support PointSize output in vertex shader in SM 3.0
+
+  [ warmenhoven ]
+  * Win10 doesn't like std::max
+
+  [ Chip Davis ]
+  * MSL: Use `rint()` instead of `round()` to round array coordinates.
+
+  [ Lachlan Deakin ]
+  * GLSL: Support OpReadClockKHR
+
+  [ rdb ]
+  * Add early exit for test_shaders if compilation fails
+
+  [ Hans-Kristian Arntzen ]
+  * MSL: Fix potentially uninitialized warning.
+  * MSL: Fix another warning on potentially uninitialized.
+
+  [ libretroadmin ]
+  * (spirv_glsl.cpp) Fix error: no matching function for call to 'max(uint32_t&, unsigned int)'
+
+  [ rdb ]
+  * GLSL: Multiplying matrix with scalar shouldn't force transpose
+  * GLSL: Add various additional extension checks.
+  * GLSL: Allow sample inputs in desktop < 400 with GL_ARB_sample_shading
+
+  [ Hans-Kristian Arntzen ]
+  * GLSL: Minor fixes for shader clock implementation.
+
+  [ rdb ]
+  * GLSL: Add support for modf, isnan and isinf in legacy GLSL
+  * GLSL/HLSL: Add emulated fallbacks for sinh/cosh/tanh/asinh/acosh/atanh
+  * GLSL: Drop invariant keyword in GLSL 110
+  * GLSL: Legacy matrix inverse/determinant polyfills, outerProduct()
+  * GLSL: Fix missing precision qualifier in spvDeterminant return value
+
+  [ Ravbug ]
+  * Check for SM < 6.7
+
+  [ Chip Davis ]
+  * MSL: Add a workaround for broken `level()` arguments.
+
+  [ Randall C. O'Reilly ]
+  * add support for OpAtomicFAddEXT atomic add on float types, now avail in metal 3.0
+  * add OpAtomicFMinEXT and Max as well, while we're at it -- I didn't test those but presumably work the same.
+  * revert FMinEXT, FMaxExt
+  * added tests and added msl3 to test_shaders.py
+
+  [ Chip Davis ]
+  * MSL: Deduplicate function constants.
+
+  [ Randall C. O'Reilly ]
+  * update msl_compiler_supports_version to work with metal 3.0
+  * cleaner version check
+
+  [ Laura Hermanns ]
+  * GLSL: Don't create temporaries for sampled image types in GLSL.
+
+  [ Nathan Gauër ]
+  * adds Khronos license to LICENSES folder.
+  * try adding SPDX notice
+  * applying pr feedback
+  * revert trailing space fix
+
+ -- john <john@odin>  Wed, 22 Mar 2023 09:47:39 -0600
+
 spirv-cross (2021.01.15+588~rc1-1lunarg22.04-1) jammy; urgency=medium
 
   [ Hans-Kristian Arntzen ]
