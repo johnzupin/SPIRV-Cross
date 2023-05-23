@@ -1,3 +1,79 @@
+spirv-cross (2021.01.15+740~rc1-1lunarg20.04-1) focal; urgency=medium
+
+  [ skkkksdkfak ]
+  * Fix argument for CommitProceduralPrimitiveHit.
+
+  [ Skye ]
+  * Implement setscalar fns for all getscalar fns
+  * bumped version, corrected function signatures
+
+  [ Try ]
+  * task shader initial
+  * code-style
+
+  [ Gulfem Savrun Yeniceri ]
+  * Add missing <exception> include
+
+  [ Hans-Kristian Arntzen ]
+  * HLSL: Update rayquery reference.
+
+  [ Try ]
+  * virtual emit_mesh_tasks
+  * cleanup
+
+  [ John Wells ]
+  * Fix for argument buffer index compare when invalid
+  * Fix for typo in help
+
+  [ Skye ]
+  * update f32 to u32
+
+  [ John Wells ]
+  * Add code braces
+  * Make argument buffer padding testable
+  * Revert "Make argument buffer padding testable"
+
+  [ Hans-Kristian Arntzen ]
+  * GLSL: Fix expression reorder bug with legacy FMA fallback.
+  * MSL: Do not override variable name late.
+  * HLSL: Add missing test reference.
+  * MSL: Add test for block IO output with function use.
+
+  [ georgeouzou ]
+  * GLSL: Support KHR_subgroup_arithmetic IAdd
+  * GLSL: Support KHR_subgroup_arithmetic FAdd
+  * GLSL: Checking for inactive threads in non uniform arithmetic ops
+  * GLSL: Support KHR_subgroup_arithmetic IMul/FMul
+
+  [ 手机用户Xh2vb13n ]
+  * HLSL: support Texture2D::GatherCmp function
+
+  [ Hans-Kristian Arntzen ]
+  * MSL: Use name_id consistently in argument declaration.
+
+  [ Laura Hermanns ]
+  * GLSL: Use actual field offset to validate vec4 boundary alignment.
+  * HLSL: Don't restrict SV_RenderTargetArrayIndex to GS and MS.
+
+  [ Hans-Kristian Arntzen ]
+  * Update Ubuntu CI versions.
+  * HLSL: Add test for straddling + holes in struct.
+
+  [ George Ouzounoudis ]
+  * GLSL: Address review comments
+  * GLSL: Add tests for subgroup iadd, fadd, imul, fmul
+
+  [ Hans-Kristian Arntzen ]
+  * GLSL: Disambiguate pointer vs array properly in packed_size/alignment.
+  * MSL: Don't hit array copy path for pointer to array.
+  * MSL: Use templated array type when emitting BDA to arrays.
+  * Be more precise in usage of pointer/array mixing.
+
+  [ Trass3r ]
+  * upload binaries as artifacts (#2144)
+
+ -- john <john@odin>  Tue, 23 May 2023 11:28:57 -0600
+
 spirv-cross (2021.01.15+688~rc1-1lunarg20.04-1) focal; urgency=medium
 
   [ rdb ]
