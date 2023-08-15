@@ -1,3 +1,73 @@
+spirv-cross (2021.01.15+741~rc1-1lunarg22.04-1) jammy; urgency=medium
+
+  [ Evan Tang ]
+  * MSL: Fix dref lod workaround on combined texture/samplers
+
+  [ Laura Hermanns ]
+  * HLSL: Add support to preserve (RW)StructuredBuffer resources.
+  * Added tests for HLSL structured buffers.
+
+  [ Hans-Kristian Arntzen ]
+  * HLSL: Add CLI option for --hlsl-preserve-structured-buffers.
+  * Update test output for preserve structured.
+
+  [ Tibor Klajnscek ]
+  * added get_required_extensions() API to GLSL compiler
+
+  [ rcombs ]
+  * MSL: fix function constant deduplication misfire
+
+  [ Stephen Hutchinson ]
+  * Add pkg-config file for static builds
+  * CMakeLists/pkgconfig: use a single version definition
+
+  [ Hans-Kristian Arntzen ]
+  * Apply suggestions from code review
+  * Workaround MSVC jank
+  * MSL: Consider bool/short remapping when dealing with composites.
+  * MSL: Handle stores to struct bool[].
+  * MSL: Handle more complex array copy scenarios with bool <-> short.
+  * MSL: Add test for bool-in-struct edge cases.
+  * spirv-cross-c: Bump minor version.
+  * Small cleanup after merge.
+  * Minor cleanup in constant_expression().
+  * MSL: Consider bool-short remapping for constant expressions as well.
+  * MSL: Consider changed array types for array-of-constant-bool in struct.
+  * C-api: Fix warning.
+  * GLSL: Fix bug with mixed precision on PHI variables.
+  * Skip line directives when emitting loop condition blocks.
+
+  [ Try ]
+  * meshlet flip-y support
+  * flip-y-test
+
+  [ Chip Davis ]
+  * Use --preserve-numeric-ids when assembling test shaders.
+  * MSL: Support `SPV_KHR_shader_ballot` and `SPV_KHR_subgroup_vote`.
+
+  [ Hans-Kristian Arntzen ]
+  * Apply suggestions from code review
+  * HLSL: Add explicit error for floating point atomics.
+
+  [ Try ]
+  * track access to meshlet position.y, via SPIRExpression
+
+  [ Hans-Kristian Arntzen ]
+  * HLSL: Move new mesh shader around to more suitable location.
+  * Consider plain Position builtin variable as well.
+  * Consider dynamically indexed gl_Position in mesh.
+  * Add test for plain variable mesh position.
+
+  [ Try ]
+  * + spvMakeIntersectionParams
+  * update rq unit tests
+  * update rq unit tests
+
+  [ Bill Hollings ]
+  * Fix argument buffer padding when content includes arrays.
+
+ -- john <john@odin>  Tue, 15 Aug 2023 14:48:40 -0600
+
 spirv-cross (2021.01.15+740~rc1-1lunarg22.04-1) jammy; urgency=medium
 
   [ skkkksdkfak ]
