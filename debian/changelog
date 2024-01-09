@@ -1,3 +1,138 @@
+spirv-cross (2021.01.15+854~rc1-1lunarg20.04-1) focal; urgency=medium
+
+  [ Evan Tang ]
+  * MSL: Prevent RAW hazards on read_write textures
+  * MSL: Make rw texture fences optional
+
+  [ Try ]
+  * MSL: runtime array over argument buffers
+
+  [ Hans-Kristian Arntzen ]
+  * MSL: Fixup nits from review.
+  * GLSL: Require mesh shader when using perprimitiveEXT in frag shader.
+  * GLSL: Implement 64-bit image support.
+  * GLSL: Emit inline invariant position for mesh shaders.
+  * GLSL: Fix Clip/Cull in mesh shaders.
+
+  [ Hitesh A. Bosamiya ]
+  * [SC-2189] Compiler::get_shader_resources() does not return all uniforms
+
+  [ Hans-Kristian Arntzen ]
+  * MSL: Workaround bizarre crash on macOS.
+
+  [ Try ]
+  * check for SPVFuncImplVariableSizedDescriptor
+  * MSL: fix mutability for rayQueryEXT parameters
+  * fix extraction of global variables, in case of atomics
+  * Fix unroll, when storing to pointer to array
+
+  [ Evan Tang ]
+  * Cache externals in GitHub Actions
+  * Parallelize Github Actions builds
+
+  [ Laura Hermanns ]
+  * Add Natvis file with debug information for VectorView and SmallVector.
+
+  [ Hans-Kristian Arntzen ]
+  * MSL: Use powr instead of pow.
+  * HLSL: Add missing reference output file.
+  * GLSL: Handle empty block declarations.
+  * GLSL: Ignore bogus constant/undefs which use block types.
+  * GLSL: Use buffer_reference2 instead of 1.
+  * Fix stray namespace issue.
+
+  [ Bill Hollings ]
+  * MSL: Workaround Metal 3.1 regression bug on recursive input structs.
+
+  [ Hans-Kristian Arntzen ]
+  * Fixup stray comments in test_shaders.sh.
+  * Style fixups.
+
+  [ Laura Hermanns ]
+  * Fix declaration of gl_SampleMaskIn[1] in HLSL backend.
+
+  [ Hans-Kristian Arntzen ]
+  * HLSL: Declare sample mask array with proper module type.
+  * Add test for sample mask bulk load/store.
+  * MSL: Improve handling of sample masks.
+
+  [ Bill Hollings ]
+  * MSL: Fix regression error in argument buffer runtime arrays.
+
+  [ Eliza Velasquez ]
+  * Workaround for generating bool uniforms in ESSL1
+
+  [ Hans-Kristian Arntzen ]
+  * Review nit, update brace placement
+  * Only use lowp path for legacy ES
+
+  [ chirsz-ever ]
+  * Add "build" to .gitignore
+  * Allow to customize float literals in output
+
+  [ Hans-Kristian Arntzen ]
+  * Apply suggestions from code review
+  * Apply suggestions from code review
+  * MSL: Add divide to reserved function names.
+  * MSL: Support std140 half matrices and arrays.
+  * MSL: Use more appropriate padded types.
+  * MSL: Don't use swizzle if we have wrapper.
+  * MSL: Move test files to packing/.
+
+  [ Chip Davis ]
+  * MSL: Work around broken cube texture gradients on Apple Silicon.
+  * Add missing new MSL options to the C API and the CLI.
+
+  [ Hans-Kristian Arntzen ]
+  * MSL: Implement Metal 3.1 image atomics natively.
+  * MSL: Update test scripts for MSL 3.1 testing.
+  * MSL: Add some image atomic tests for 3.1.
+  * MSL: Support using the offline Metal Windows toolchain for validation.
+  * MSL: Throw on emulated image array atomics.
+
+  [ Hugo Devillers ]
+  * Added an Op field to SPIRType
+  * fix a bunch of case where SPIRType::op is wrong/corrupted
+  * msl: fix test regressions with samplemask
+  * msl: fix two more instances of the wrong op in SPIRType
+  * msl: fix many instances of SPIRType.self being incorrectly set
+  * msl: make build_extended_vector_type deal with compound types better
+  * msl: look at the actual variable element type in to_member_reference
+  * msl: look at the pointee type in emit_tessellation_access_chain
+  * use 'op' as the ground truth in is_array and is_pointer
+
+  [ Chip Davis ]
+  * MSL: Fix patch vertex count with raw buffer tese input.
+
+  [ Try ]
+  * MSL: add ray-cull mask
+  * + missing tests
+
+  [ Hans-Kristian Arntzen ]
+  * MSL: Consider PtrAccessChain on array types.
+  * MSL: Use LHS expression to determine whether or not to do array copy.
+  * MSL: Only do address-of expression when needed.
+  * MSL: Defererence pointer expressions before traversing access chain.
+  * MSL: Add test for vector-to-scalar variable pointer.
+  * MSL: Wrap dereferenced ptr-chain expressions.
+
+  [ Hugo Devillers ]
+  * fix unintialised struct in SPIRType
+  * fix more spirtype::op instances
+
+  [ Hans-Kristian Arntzen ]
+  * Various nit fixes and improvements from review.
+  * MSL: Remove special case for threadgroup array wrapper.
+
+  [ Bill Hollings ]
+  * MSL: Ensure discrete runtime arrays of buffers have known length.
+
+  [ Hans-Kristian Arntzen ]
+  * Roll deps.
+  * HLSL: Fix issue with vec4 straddle rules in substructs.
+
+ -- john <john@odin>  Tue, 09 Jan 2024 11:15:49 -0700
+
 spirv-cross (2021.01.15+741~rc1-1lunarg20.04-1) focal; urgency=medium
 
   [ Evan Tang ]
