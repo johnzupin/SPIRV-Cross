@@ -640,6 +640,13 @@ bool Compiler::is_physical_pointer(const SPIRType &type) const
 	return type.op == OpTypePointer && type.storage == StorageClassPhysicalStorageBuffer;
 }
 
+bool Compiler::is_physical_pointer_to_buffer_block(const SPIRType &type) const
+{
+	return is_physical_pointer(type) && get_pointee_type(type).self == type.parent_type &&
+	       (has_decoration(type.self, DecorationBlock) ||
+	        has_decoration(type.self, DecorationBufferBlock));
+}
+
 bool Compiler::is_runtime_size_array(const SPIRType &type)
 {
 	return type.op == OpTypeRuntimeArray;
@@ -1220,7 +1227,7 @@ const SPIRType &Compiler::get_pointee_type(uint32_t type_id) const
 
 uint32_t Compiler::get_variable_data_type_id(const SPIRVariable &var) const
 {
-	if (var.phi_variable)
+	if (var.phi_variable || var.storage == spv::StorageClass::StorageClassAtomicCounter)
 		return var.basetype;
 	return get_pointee_type_id(var.basetype);
 }
@@ -3328,13 +3335,11 @@ bool Compiler::AnalyzeVariableScopeAccessHandler::handle_terminator(const SPIRBl
 bool Compiler::AnalyzeVariableScopeAccessHandler::handle(spv::Op op, const uint32_t *args, uint32_t length)
 {
 	// Keep track of the types of temporaries, so we can hoist them out as necessary.
-	uint32_t result_type, result_id;
+	uint32_t result_type = 0, result_id = 0;
 	if (compiler.instruction_to_result_type(result_type, result_id, op, args, length))
 	{
 		// For some opcodes, we will need to override the result id.
 		// If we need to hoist the temporary, the temporary type is the input, not the result.
-		// FIXME: This will likely break with OpCopyObject + hoisting, but we'll have to
-		// solve it if we ever get there ...
 		if (op == OpConvertUToAccelerationStructureKHR)
 		{
 			auto itr = result_id_to_type.find(args[2]);
@@ -3443,6 +3448,13 @@ bool Compiler::AnalyzeVariableScopeAccessHandler::handle(spv::Op op, const uint3
 
 	case OpCopyObject:
 	{
+		// OpCopyObject copies the underlying non-pointer type, 
+		// so any temp variable should be declared using the underlying type.
+		// If the type is a pointer, get its base type and overwrite the result type mapping.
+		auto &type = compiler.get<SPIRType>(result_type);
+		if (type.pointer)
+			result_id_to_type[result_id] = type.parent_type;
+
 		if (length < 3)
 			return false;
 
@@ -4416,11 +4428,9 @@ bool Compiler::ActiveBuiltinHandler::handle(spv::Op opcode, const uint32_t *args
 		for (uint32_t i = 0; i < count; i++)
 		{
 			// Pointers
+			// PtrAccessChain functions more like a pointer offset. Type remains the same.
 			if (opcode == OpPtrAccessChain && i == 0)
-			{
-				type = &compiler.get<SPIRType>(type->parent_type);
 				continue;
-			}
 
 			// Arrays
 			if (!type->array.empty())
@@ -5024,8 +5034,7 @@ void Compiler::PhysicalStorageBufferPointerHandler::mark_aligned_access(uint32_t
 bool Compiler::PhysicalStorageBufferPointerHandler::type_is_bda_block_entry(uint32_t type_id) const
 {
 	auto &type = compiler.get<SPIRType>(type_id);
-	return type.storage == StorageClassPhysicalStorageBufferEXT && type.pointer &&
-	       type.pointer_depth == 1 && !compiler.type_is_array_of_pointers(type);
+	return compiler.is_physical_pointer(type);
 }
 
 uint32_t Compiler::PhysicalStorageBufferPointerHandler::get_minimum_scalar_alignment(const SPIRType &type) const
@@ -5055,7 +5064,8 @@ void Compiler::PhysicalStorageBufferPointerHandler::setup_meta_chain(uint32_t ty
 		access_chain_to_physical_block[var_id] = &meta;
 
 		auto &type = compiler.get<SPIRType>(type_id);
-		if (type.basetype != SPIRType::Struct)
+
+		if (!compiler.is_physical_pointer_to_buffer_block(type))
 			non_block_types.insert(type_id);
 
 		if (meta.alignment == 0)
@@ -5114,9 +5124,7 @@ bool Compiler::PhysicalStorageBufferPointerHandler::handle(Op op, const uint32_t
 uint32_t Compiler::PhysicalStorageBufferPointerHandler::get_base_non_block_type_id(uint32_t type_id) const
 {
 	auto *type = &compiler.get<SPIRType>(type_id);
-	while (type->pointer &&
-	       type->storage == StorageClassPhysicalStorageBufferEXT &&
-	       !type_is_bda_block_entry(type_id))
+	while (compiler.is_physical_pointer(*type) && !type_is_bda_block_entry(type_id))
 	{
 		type_id = type->parent_type;
 		type = &compiler.get<SPIRType>(type_id);
@@ -5131,12 +5139,10 @@ void Compiler::PhysicalStorageBufferPointerHandler::analyze_non_block_types_from
 	for (auto &member : type.member_types)
 	{
 		auto &subtype = compiler.get<SPIRType>(member);
-		if (subtype.basetype != SPIRType::Struct && subtype.pointer &&
-		    subtype.storage == spv::StorageClassPhysicalStorageBufferEXT)
-		{
+
+		if (compiler.is_physical_pointer(subtype) && !compiler.is_physical_pointer_to_buffer_block(subtype))
 			non_block_types.insert(get_base_non_block_type_id(member));
-		}
-		else if (subtype.basetype == SPIRType::Struct && !subtype.pointer)
+		else if (subtype.basetype == SPIRType::Struct && !compiler.is_pointer(subtype))
 			analyze_non_block_types_from_block(subtype);
 	}
 }
@@ -5149,9 +5155,14 @@ void Compiler::analyze_non_block_pointer_types()
 	// Analyze any block declaration we have to make. It might contain
 	// physical pointers to POD types which we never used, and thus never added to the list.
 	// We'll need to add those pointer types to the set of types we declare.
-	ir.for_each_typed_id<SPIRType>([&](uint32_t, SPIRType &type) {
-		if (has_decoration(type.self, DecorationBlock) || has_decoration(type.self, DecorationBufferBlock))
+	ir.for_each_typed_id<SPIRType>([&](uint32_t id, SPIRType &type) {
+		// Only analyze the raw block struct, not any pointer-to-struct, since that's just redundant.
+		if (type.self == id &&
+		    (has_decoration(type.self, DecorationBlock) ||
+		     has_decoration(type.self, DecorationBufferBlock)))
+		{
 			handler.analyze_non_block_types_from_block(type);
+		}
 	});
 
 	physical_storage_non_block_pointer_types.reserve(handler.non_block_types.size());
