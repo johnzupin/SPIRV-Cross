@@ -1,3 +1,68 @@
+spirv-cross (2021.01.15+961~rc1-1lunarg20.04-1) focal; urgency=medium
+
+  [ Hans-Kristian Arntzen ]
+  * Add missing reference file.
+  * MSL: Plumb through member state to image/sampler types.
+
+  [ Wooyoung Kim ]
+  * Add supprot for the SPV_QCOM_image_processing extension
+
+  [ Hans-Kristian Arntzen ]
+  * MSL: Support variable sized descriptor array in argument buffer.
+  * MSL: Add test for texture/sampler variable count.
+  * MSL: Implement spvDescriptorArray path for SSBO/UBO.
+  * Add i64/u64 spec constant to C API.
+
+  [ Wooyoung Kim ]
+  * Add supprot for the SPV_QCOM_image_processing extension
+
+  [ Hans-Kristian Arntzen ]
+  * Bump to CMake 3.6 and handle deprecated Python module check.
+
+  [ sean ]
+  * MSL: Add support for SPV_EXT_integer_dot_product
+
+  [ Hans-Kristian Arntzen ]
+  * Fix nits from review.
+  * MSL: Fix misc sign issues with dot product impl and add more coverage.
+  * Add reserve to object pool.
+  * GLSL: Handle BDA to plain non-block struct.
+  * GLSL: Forward declare non-block BDA types as well.
+  * GLSL: Handle synthesized pointer-to-pointer.
+  * GLSL: Add basic test for chained access chains.
+  * GLSL: Handle ptr-to-array casts with unexpected array strides.
+
+  [ Frank McCoy ]
+  * Fixed conflict with windows min and max
+
+  [ Hans-Kristian Arntzen ]
+  * Use more descriptive versioning in gitversion.h.
+  * MSL: Handle volatile properly for emulated image atomics.
+
+  [ DmitryTsyganov ]
+  * Add CompilerError constructor that accepts const char* as a parameter Fixes #2273
+
+  [ Try ]
+  * fix codegen for shader with only bindless ssbo
+
+  [ Bill Hollings ]
+  * OpCopyObject declare a temp var of base type, not pointer type.
+
+  [ penghaiyi ]
+  * GLSL: Fix atomic_uint being incorrectly generated as uint
+
+  [ Jan Sikorski ]
+  * MSL: Pass texture array index separately to atomic texture operations.
+
+  [ Hans-Kristian Arntzen ]
+  * MSL: Nit from review.
+  * MSL: Also test image atomic for image2DArray.
+  * MSL: Improve handling of BDA + atomics.
+  * Fix crash when traversing PtrAccessChain to OpTypeStruct.
+  * MSL: Fix type hierarchy for extended vectors.
+
+ -- john <john@odin>  Tue, 12 Mar 2024 09:36:04 -0600
+
 spirv-cross (2021.01.15+854~rc1-1lunarg20.04-1) focal; urgency=medium
 
   [ Evan Tang ]
