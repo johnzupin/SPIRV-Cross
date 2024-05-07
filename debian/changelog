@@ -1,3 +1,48 @@
+spirv-cross (2021.01.15+998~rc1-1lunarg22.04-1) jammy; urgency=medium
+
+  [ Bill Hollings ]
+  * MSL: atomic_compare_exchange_weak() support CompilerMSL:msl_options.texture_1D_as_2D.
+
+  [ Jan Sikorski ]
+  * Support cases of LUTs which are not function local.
+
+  [ Hans-Kristian Arntzen ]
+  * Smaller cleanups on multi-function Private LUTs.
+  * Add test for multi-function Private LUT.
+  * Block loop optimization if Phi is used.
+
+  [ Evan Tang ]
+  * Use recursive template for spvArrayCopy
+
+  [ Hans-Kristian Arntzen ]
+  * MSL: Get rid of obsolete "is pointer" methods.
+
+  [ Jan Sikorski ]
+  * MSL: Add support for overlapping bindings.
+  * MSL: Avoid emitting multiple declaration of the same variable.
+  * MSL: Check for device argument buffers for overlapping bindings.
+  * MSL: Pass variable id when emitting image entry point declarations.
+  * MSL: Added tests for overlapping bindings.
+
+  [ Hans-Kristian Arntzen ]
+  * Cleanup overlap tag from review.
+  * MSL: Improve argument buffer descriptor aliasing implementation.
+  * MSL: Workaround compiler issue with image fence when used as reference.
+  * MSL: Reassign bindings so they work with decoration binding in test.
+  * Fix tabbing nits.
+  * MSL: Fix SUMulExtended for 64-bit inputs.
+  * MSL: Handle Atomic{S,U}{Min,Max} with mismatched image sign.
+  * MSL: Inherit interpolation qualifiers through recursive composites.
+
+  [ Jan Sikorski ]
+  * MSL: Remove pointer wrapper stored in spvDescriptorArray.
+  * Updated tests.
+
+  [ Hans-Kristian Arntzen ]
+  * MSL: Handle missing FP16 trancendental overloads.
+
+ -- john <john@odin>  Tue, 07 May 2024 08:19:00 -0600
+
 spirv-cross (2021.01.15+961~rc1-1lunarg22.04-1) jammy; urgency=medium
 
   [ Hans-Kristian Arntzen ]
