@@ -1,3 +1,50 @@
+spirv-cross (2021.01.15+999~rc1-1lunarg22.04-1) jammy; urgency=medium
+
+  [ Bill Hollings ]
+  * MSL: Fix argument buffer padding.
+
+  [ Hans-Kristian Arntzen ]
+  * Fix unused variable warning on GCC 14.
+  * Mark function call results as control dependent as necessary.
+
+  [ Bill Hollings ]
+  * MSL: Support ConstOffsets on image gather.
+
+  [ Hans-Kristian Arntzen ]
+  * MSL: Clean up some nits for review.
+
+  [ Aitor Camacho ]
+  * Add option to enforce fragment execution with side effects in MSL
+
+  [ Hans-Kristian Arntzen ]
+  * Update C API minor version.
+  * Fixup invalid shader that should not pass.
+  * MSL: Don't bother supporting invalid multi-dimensional dynamic buffers.
+  * MSL: Do not overwrite rez_bind when padding.
+  * MSL: Only consider padding for non-aliased resources.
+  * MSL: Always use layout-declared array size for argument buffers.
+  * Pass down orig_id to type_to_array_glsl as well.
+  * GLSL: Use SPIR-V intrinsics for N{Min,Max,Clamp}.
+
+  [ Aitor Camacho ]
+  * MSL: Add option to force depth write in fragment shaders
+
+  [ Hans-Kristian Arntzen ]
+  * MSL: Add median3 to list of banned func names.
+
+  [ Bill Hollings ]
+  * MSL: Fixes for constexpr sampler use with argument buffers.
+  * MSL: Support descriptor sets with recursive content when using argument buffers.
+
+  [ Hans-Kristian Arntzen ]
+  * Apply suggestions from code review
+  * MSL/C: Add _2 variant for the resource binding API.
+
+  [ Bill Hollings ]
+  * MSL: Image gather ConstOffsets supports multiple address spaces.
+
+ -- john <john@odin>  Tue, 16 Jul 2024 11:08:02 -0600
+
 spirv-cross (2021.01.15+998~rc1-1lunarg22.04-1) jammy; urgency=medium
 
   [ Bill Hollings ]
