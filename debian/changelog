@@ -1,3 +1,68 @@
+spirv-cross (2021.01.15+1014~rc1-1lunarg24.04-1) noble; urgency=medium
+
+  [ Hans-Kristian Arntzen ]
+  * MSL: Fix invalid packing for pointer-to-vector.
+  * MSL: Consider pointer arithmetic for OpPtrAccessChain.
+  * MSL: Clean up some obsolete use of type.pointer.
+  * MSL: Cast to packed format when using unexpected stride.
+  * MSL: Add test for custom ArrayStride.
+  * MSL: Fix indent.
+
+  [ Bill Hollings ]
+  * MSL: Support a runtime array with dynamic offset in an argument buffer.
+
+  [ Evan Tang ]
+  * Fix MSL for OpImageQueryLod on a vector larger than needed
+
+  [ Jan Sikorski ]
+  * MSL: Recompile when an aliased descriptor's name is changed.
+
+  [ Hans-Kristian Arntzen ]
+  * Small nit.
+  * Add more detailed comment explaining the force recompile hack.
+
+  [ Bill Hollings ]
+  * MSL: Minor fix to resource type of spvBufferSizeConstants array indexes.
+
+  [ Hans-Kristian Arntzen ]
+  * HLSL: Implement SM 6.8 BaseVertex/BaseInstance.
+
+  [ Andrei Alexeyev ]
+  * Fix incorrect return value for ParsedIR::get_member_decoration(SpvDecorationMatrixStride)
+
+  [ Evan Tang ]
+  * Fix volatile helper invocation in non-main functions
+  * Don't add volatile to thread address space variables
+
+  [ Salman Ahmed ]
+  * Fix CMake failing with Android NDK 27+
+
+  [ Hans-Kristian Arntzen ]
+  * c: Add HLSL option use_entry_point_name.
+  * Handle SpecConstantOp used as switch case.
+
+  [ chyyran ]
+  * c: wrap spvc_compiler_set_entry_point in error scope
+
+  [ Hans-Kristian Arntzen ]
+  * Roll toolchain deps.
+
+  [ chyyran ]
+  * c: allow access to gl_plain_uniforms resources
+  * c: Add HLSL option preserve_structured_buffers
+  * Replace assert of buffer block SPIRType with exception
+
+  [ flafflar ]
+  * GLSL: Convert switch blocks to if statements in legacy desktop versions
+
+  [ Evan Tang ]
+  * Reduce recompile count with texture atomics
+
+  [ Hans-Kristian Arntzen ]
+  * Small style nit.
+
+ -- john <john@odin>  Tue, 01 Oct 2024 09:29:58 -0600
+
 spirv-cross (2021.01.15+999~rc1-1lunarg24.04-1) noble; urgency=medium
 
   [ Bill Hollings ]
