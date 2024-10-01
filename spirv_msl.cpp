@@ -1361,14 +1361,14 @@ void CompilerMSL::emit_entry_point_declarations()
 
 		if (is_array(type))
 		{
-			if (!type.array[type.array.size() - 1])
-				SPIRV_CROSS_THROW("Runtime arrays with dynamic offsets are not supported yet.");
-
 			is_using_builtin_array = true;
 			statement(get_argument_address_space(var), " ", type_to_glsl(type), "* ", to_restrict(var_id, true), name,
 			          type_to_array_glsl(type, var_id), " =");
 
-			uint32_t array_size = to_array_size_literal(type);
+			uint32_t array_size = get_resource_array_size(type, var_id);
+			if (array_size == 0)
+				SPIRV_CROSS_THROW("Size of runtime array with dynamic offset could not be determined from resource bindings.");
+
 			begin_scope();
 
 			for (uint32_t i = 0; i < array_size; i++)
@@ -1576,8 +1576,7 @@ string CompilerMSL::compile()
 	preprocess_op_codes();
 	build_implicit_builtins();
 
-	if (needs_manual_helper_invocation_updates() &&
-	    (active_input_builtins.get(BuiltInHelperInvocation) || needs_helper_invocation))
+	if (needs_manual_helper_invocation_updates() && needs_helper_invocation)
 	{
 		string builtin_helper_invocation = builtin_to_glsl(BuiltInHelperInvocation, StorageClassInput);
 		string discard_expr = join(builtin_helper_invocation, " = true, discard_fragment()");
@@ -1721,7 +1720,7 @@ void CompilerMSL::preprocess_op_codes()
 	    (is_sample_rate() && (active_input_builtins.get(BuiltInFragCoord) ||
 	                          (need_subpass_input_ms && !msl_options.use_framebuffer_fetch_subpasses))))
 		needs_sample_id = true;
-	if (preproc.needs_helper_invocation)
+	if (preproc.needs_helper_invocation || active_input_builtins.get(BuiltInHelperInvocation))
 		needs_helper_invocation = true;
 
 	// OpKill is removed by the parser, so we need to identify those by inspecting
@@ -2058,8 +2057,7 @@ void CompilerMSL::extract_global_variables_from_function(uint32_t func_id, std::
 			}
 
 			case OpDemoteToHelperInvocation:
-				if (needs_manual_helper_invocation_updates() &&
-				    (active_input_builtins.get(BuiltInHelperInvocation) || needs_helper_invocation))
+				if (needs_manual_helper_invocation_updates() && needs_helper_invocation)
 					added_arg_ids.insert(builtin_helper_invocation_id);
 				break;
 
@@ -2112,7 +2110,7 @@ void CompilerMSL::extract_global_variables_from_function(uint32_t func_id, std::
 			}
 
 			if (needs_manual_helper_invocation_updates() && b.terminator == SPIRBlock::Kill &&
-			    (active_input_builtins.get(BuiltInHelperInvocation) || needs_helper_invocation))
+			    needs_helper_invocation)
 				added_arg_ids.insert(builtin_helper_invocation_id);
 
 			// TODO: Add all other operations which can affect memory.
@@ -4803,7 +4801,7 @@ bool CompilerMSL::validate_member_packing_rules_msl(const SPIRType &type, uint32
 			return false;
 	}
 
-	if (!mbr_type.array.empty())
+	if (is_array(mbr_type))
 	{
 		// If we have an array type, array stride must match exactly with SPIR-V.
 
@@ -9258,18 +9256,40 @@ void CompilerMSL::emit_instruction(const Instruction &instruction)
 		uint32_t coord_id = ops[3];
 		emit_uninitialized_temporary_expression(result_type, id);
 
+		std::string coord_expr = to_expression(coord_id);
 		auto sampler_expr = to_sampler_expression(image_id);
 		auto *combined = maybe_get<SPIRCombinedImageSampler>(image_id);
 		auto image_expr = combined ? to_expression(combined->image) : to_expression(image_id);
+		const SPIRType &image_type = expression_type(image_id);
+		const SPIRType &coord_type = expression_type(coord_id);
+
+		switch (image_type.image.dim)
+		{
+		case Dim1D:
+			if (!msl_options.texture_1D_as_2D)
+				SPIRV_CROSS_THROW("ImageQueryLod is not supported on 1D textures.");
+			[[fallthrough]];
+		case Dim2D:
+			if (coord_type.vecsize > 2)
+				coord_expr = enclose_expression(coord_expr) + ".xy";
+			break;
+		case DimCube:
+		case Dim3D:
+			if (coord_type.vecsize > 3)
+				coord_expr = enclose_expression(coord_expr) + ".xyz";
+			break;
+		default:
+			SPIRV_CROSS_THROW("Bad image type given to OpImageQueryLod");
+		}
 
 		// TODO: It is unclear if calculcate_clamped_lod also conditionally rounds
 		// the reported LOD based on the sampler. NEAREST miplevel should
 		// round the LOD, but LINEAR miplevel should not round.
 		// Let's hope this does not become an issue ...
 		statement(to_expression(id), ".x = ", image_expr, ".calculate_clamped_lod(", sampler_expr, ", ",
-		          to_expression(coord_id), ");");
+		          coord_expr, ");");
 		statement(to_expression(id), ".y = ", image_expr, ".calculate_unclamped_lod(", sampler_expr, ", ",
-		          to_expression(coord_id), ");");
+		          coord_expr, ");");
 		register_control_dependent_expression(id);
 		break;
 	}
@@ -10283,6 +10303,13 @@ void CompilerMSL::emit_atomic_func_op(uint32_t result_type, uint32_t result_id, 
 	{
 		auto obj_expression = to_expression(obj);
 		auto split_index = obj_expression.find_first_of('@');
+		bool needs_reinterpret = opcode == OpAtomicUMax || opcode == OpAtomicUMin || opcode == OpAtomicSMax || opcode == OpAtomicSMin;
+		needs_reinterpret &= type.basetype != expected_type;
+		SPIRVariable *backing_var = nullptr;
+
+		// Try to avoid waiting until not force recompile later mode to enable force recompile later
+		if (needs_reinterpret && (backing_var = maybe_get_backing_variable(obj)))
+			add_spv_func_and_recompile(SPVFuncImplTextureCast);
 
 		// Will only be false if we're in "force recompile later" mode.
 		if (split_index != string::npos)
@@ -10293,27 +10320,21 @@ void CompilerMSL::emit_atomic_func_op(uint32_t result_type, uint32_t result_id, 
 			// Handle problem cases with sign where we need signed min/max on a uint image for example.
 			// It seems to work to cast the texture type itself, even if it is probably wildly outside of spec,
 			// but SPIR-V requires this to work.
-			if ((opcode == OpAtomicUMax || opcode == OpAtomicUMin ||
-			     opcode == OpAtomicSMax || opcode == OpAtomicSMin) &&
-			    type.basetype != expected_type)
+			if (needs_reinterpret && backing_var)
 			{
-				auto *backing_var = maybe_get_backing_variable(obj);
-				if (backing_var)
-				{
-					add_spv_func_and_recompile(SPVFuncImplTextureCast);
+				assert(spv_function_implementations.count(SPVFuncImplTextureCast) && "Should have been added above");
 
-					const auto *backing_type = &get<SPIRType>(backing_var->basetype);
-					while (backing_type->op != OpTypeImage)
-						backing_type = &get<SPIRType>(backing_type->parent_type);
+				const auto *backing_type = &get<SPIRType>(backing_var->basetype);
+				while (backing_type->op != OpTypeImage)
+					backing_type = &get<SPIRType>(backing_type->parent_type);
 
-					auto img_type = *backing_type;
-					auto tmp_type = type;
-					tmp_type.basetype = expected_type;
-					img_type.image.type = ir.increase_bound_by(1);
-					set<SPIRType>(img_type.image.type, tmp_type);
+				auto img_type = *backing_type;
+				auto tmp_type = type;
+				tmp_type.basetype = expected_type;
+				img_type.image.type = ir.increase_bound_by(1);
+				set<SPIRType>(img_type.image.type, tmp_type);
 
-					image_expr = join("spvTextureCast<", type_to_glsl(img_type, obj), ">(", image_expr, ")");
-				}
+				image_expr = join("spvTextureCast<", type_to_glsl(img_type, obj), ">(", image_expr, ")");
 			}
 
 			exp += join(image_expr, ".", op, "(");
@@ -13193,7 +13214,10 @@ string CompilerMSL::get_type_address_space(const SPIRType &type, uint32_t id, bo
 		addr_space = type.pointer || (argument && type.basetype == SPIRType::ControlPointArray) ? "thread" : "";
 	}
 
-	return join(decoration_flags_signal_volatile(flags) ? "volatile " : "", addr_space);
+	if (decoration_flags_signal_volatile(flags) && 0 != strcmp(addr_space, "thread"))
+		return join("volatile ", addr_space);
+	else
+		return addr_space;
 }
 
 const char *CompilerMSL::to_restrict(uint32_t id, bool space)
@@ -14063,7 +14087,7 @@ void CompilerMSL::fix_up_shader_inputs_outputs()
 						    statement("constant uint", is_array_type ? "* " : "& ", to_buffer_size_expression(var_id),
 						              is_array_type ? " = &" : " = ", to_name(argument_buffer_ids[desc_set]),
 						              ".spvBufferSizeConstants", "[",
-						              convert_to_string(get_metal_resource_index(var, SPIRType::Image)), "];");
+						              convert_to_string(get_metal_resource_index(var, SPIRType::UInt)), "];");
 					    }
 					    else
 					    {
@@ -17050,13 +17074,21 @@ uint32_t CompilerMSL::get_declared_struct_size_msl(const SPIRType &struct_type, 
 	return msl_size;
 }
 
+uint32_t CompilerMSL::get_physical_type_stride(const SPIRType &type) const
+{
+	// This should only be relevant for plain types such as scalars and vectors?
+	// If we're pointing to a struct, it will recursively pick up packed/row-major state.
+	return get_declared_type_size_msl(type, false, false);
+}
+
 // Returns the byte size of a struct member.
 uint32_t CompilerMSL::get_declared_type_size_msl(const SPIRType &type, bool is_packed, bool row_major) const
 {
 	// Pointers take 8 bytes each
+	// Match both pointer and array-of-pointer here.
 	if (type.pointer && type.storage == StorageClassPhysicalStorageBuffer)
 	{
-		uint32_t type_size = 8 * (type.vecsize == 3 ? 4 : type.vecsize);
+		uint32_t type_size = 8;
 
 		// Work our way through potentially layered arrays,
 		// stopping when we hit a pointer that is not also an array.
@@ -17131,9 +17163,10 @@ uint32_t CompilerMSL::get_declared_input_size_msl(const SPIRType &type, uint32_t
 // Returns the byte alignment of a type.
 uint32_t CompilerMSL::get_declared_type_alignment_msl(const SPIRType &type, bool is_packed, bool row_major) const
 {
-	// Pointers aligns on multiples of 8 bytes
+	// Pointers align on multiples of 8 bytes.
+	// Deliberately ignore array-ness here. It's not relevant for alignment.
 	if (type.pointer && type.storage == StorageClassPhysicalStorageBuffer)
-		return 8 * (type.vecsize == 3 ? 4 : type.vecsize);
+		return 8;
 
 	switch (type.basetype)
 	{
@@ -18158,6 +18191,13 @@ void CompilerMSL::emit_argument_buffer_aliased_descriptor(const SPIRVariable &al
 	}
 	else
 	{
+		// This alias may have already been used to emit an entry point declaration. If there is a mismatch, we need a recompile.
+		// Moving this code to be run earlier will also conflict,
+		// because we need the qualified alias for the base resource,
+		// so forcing recompile until things sync up is the least invasive method for now.
+		if (ir.meta[aliased_var.self].decoration.qualified_alias != name)
+			force_recompile();
+
 		// This will get wrapped in a separate temporary when a spvDescriptorArray wrapper is emitted.
 		set_qualified_name(aliased_var.self, name);
 	}

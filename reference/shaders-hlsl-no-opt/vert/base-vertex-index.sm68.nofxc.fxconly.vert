@@ -1,11 +1,8 @@
 static float4 gl_Position;
-static float4 vInput0;
-static float4 vInput1;
-
+static int gl_BaseVertexARB;
 struct SPIRV_Cross_Input
 {
-    float4 vInput0 : TEXCOORD0;
-    float4 vInput1 : TEXCOORD1;
+    uint gl_BaseVertexARB : SV_StartVertexLocation;
 };
 
 struct SPIRV_Cross_Output
@@ -15,13 +12,12 @@ struct SPIRV_Cross_Output
 
 void vert_main()
 {
-    gl_Position = 10.0f.xxxx + vInput1;
+    gl_Position = float(gl_BaseVertexARB).xxxx;
 }
 
 SPIRV_Cross_Output main(SPIRV_Cross_Input stage_input)
 {
-    vInput0 = stage_input.vInput0;
-    vInput1 = stage_input.vInput1;
+    gl_BaseVertexARB = stage_input.gl_BaseVertexARB;
     vert_main();
     SPIRV_Cross_Output stage_output;
     stage_output.gl_Position = gl_Position;
