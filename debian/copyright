@@ -12,10 +12,14 @@ Copyright: 2015-2017, ARM Limited
            2016-2021, Robert Konrad
            2016-2021, The Brenwill Workshop Ltd
            2016-2021, The Khronos Group, Inc
+           including, without limitation, performance, broadcast
+           resulting
 License: Apache-2 or Apache-2.0
 
 Files: .clang-format
        .github/*
+       CMakeLists.txt
+       LICENSE
        LICENSES/Apache-2.0.txt
        Makefile
        Package.swift
@@ -26,32 +30,45 @@ Files: .clang-format
        format_all.sh
        gn/*
        include/*
+       main.cpp
        pkg-config/*
-       samples/cpp/Makefile
-       samples/cpp/atomics.comp
-       samples/cpp/multiply.comp
-       samples/cpp/shared.comp
+       samples/*
        shaders-msl/comp/buffer_device_address.msl2.comp
        shaders-msl/vert/buffer_device_address.msl2.vert
+       spirv_cfg.cpp
        spirv_cfg.hpp
        spirv_common.hpp
+       spirv_cpp.cpp
        spirv_cpp.hpp
+       spirv_cross.cpp
        spirv_cross.hpp
+       spirv_cross.natvis
+       spirv_cross_c.cpp
        spirv_cross_c.h
        spirv_cross_containers.hpp
        spirv_cross_error_handling.hpp
+       spirv_cross_parsed_ir.cpp
        spirv_cross_parsed_ir.hpp
+       spirv_cross_util.cpp
        spirv_cross_util.hpp
+       spirv_glsl.cpp
        spirv_glsl.hpp
+       spirv_hlsl.cpp
        spirv_hlsl.hpp
+       spirv_msl.cpp
        spirv_msl.hpp
+       spirv_parser.cpp
        spirv_parser.hpp
+       spirv_reflect.cpp
        spirv_reflect.hpp
+       test_shaders.py
        test_shaders.sh
+       tests-other/small_vector.cpp
        update_test_shaders.sh
 Copyright: 2015-2017, ARM Limited
            2015-2021, Arm Limited
            2018-2021, Bradley Austin Davis
+           2016-2021, Google Inc
            2019, Google, Inc
            2019-2021, Hans-Kristian Arntzen
            2016-2021, Robert Konrad
@@ -60,10 +77,11 @@ Copyright: 2015-2017, ARM Limited
            2020-2021, The Khronos Group, Inc
 License: Apache-2
 
-Files: LICENSES/MIT.txt
+Files: LICENSES/LicenseRef-KhronosFreeUse.txt
+       LICENSES/MIT.txt
        spirv.h
        spirv.hpp
-Copyright: 2014-2020, The Khronos Group Inc
+Copyright: 2014-2024, The Khronos Group Inc
 License: MIT/X11
 
 Files: CODE_OF_CONDUCT.adoc
@@ -79,8 +97,12 @@ Copyright: 2014-2016, Copyright (c)The Khronos Group Inc
 License: Khronos
 
 Files: debian/*
-Copyright: 2023, LunarG Inc <johnz@lunarg.com>
+Copyright: 2024, LunarG Inc <johnz@lunarg.com>
 License: BSD-3-clause or GPL-3 or MIT
+
+Files: debian/patches/0001-patch-remove-Makefile-becuase-we-want-to-use-cmake.patch
+Copyright: 2016-2021, The Khronos Group Inc
+License: Apache-2
 
 License: Apache-2
 Comment: Add the corresponding license text here
