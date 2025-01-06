@@ -1,3 +1,86 @@
+spirv-cross (2021.01.15+1070~rc1-1lunarg24.04-1) noble; urgency=medium
+
+  [ chyyran ]
+  * MSL: add fmod to reserved function names
+
+  [ Wooyoung Kim ]
+  * support for SPV_QCOM_image_processing2
+
+  [ rdb ]
+  * Allow empty structs in legacy HLSL
+
+  [ Hans-Kristian Arntzen ]
+  * MSL: Fix emission of bindless helper template for bindless SSBO.
+  * HLSL: Implement SV_Barycentrics.
+
+  [ squidbus ]
+  * MSL: Work around internal compiler error from mulhi.
+
+  [ Hans-Kristian Arntzen ]
+  * MSL: Use actual result type member as cast type for mulhi.
+  * MSL: Allow Centroid and Sample decorations on bary coord.
+  * GLSL: Just skip over impossible declarations instead of early-exit.
+  * Make SRem sign aware like all the other arithmetic ops.
+
+  [ M. P. Halpin ]
+  * Set macOS build settings in CI/CD
+
+  [ kiddkaffeine ]
+  * Add CI/CD for Apple mobile platforms
+
+  [ Try ]
+  * added mesh-shader support
+  * fix gl_CullDistance, gl_PrimitiveShadingRateEXT
+  * Update mesh-shader-basic-lines.msl3.spv14.vk.nocompat.mesh
+
+  [ Hans-Kristian Arntzen ]
+  * Review fixups.
+  * MSL: Fix crash when per-primitive variables are not used.
+
+  [ Try ]
+  * added task shader support
+
+  [ Hans-Kristian Arntzen ]
+  * Minor nits from review.
+
+  [ Spencer Fricke ]
+  * ci: Build dependency for Github Actions
+
+  [ Bill Hollings ]
+  * MSL: Pad array elements in Metal argument buffer when shader declares scalar.
+
+  [ rdb ]
+  * glsl: Correct version number check for texture buffers
+  * GLSL: Use u literal suffix in legacy if GL_EXT_gpu_shader4 available
+
+  [ Dr. Dystopia ]
+  * Add out-of-bounds assertions
+
+  [ Hans-Kristian Arntzen ]
+  * Apply suggestions from code review
+  * Get rid of MSL SDK check on CI.
+  * MSL: centroid/sample barycentrics aren't supported after all.
+
+  [ Try ]
+  * fixes for mesh-shader
+
+  [ Hans-Kristian Arntzen ]
+  * MSL: Use unpacked arguments in texture arguments.
+  * Track invariance dependencies separate from expression deps.
+
+  [ marcos balsa ]
+  * Actually traverse the dependency chain through temporaries.
+
+  [ Hans-Kristian Arntzen ]
+  * Forward builtin state through access chains.
+  * HLSL: Handle array load/store of clip/cull in mesh shaders.
+  * HLSL: Don't emit the builtin PerVertex array as inout.
+
+  [ John Zupin ]
+  * packaging: debian: update copyright
+
+ -- john <john@odin>  Mon, 06 Jan 2025 14:04:59 -0700
+
 spirv-cross (2021.01.15+1014~rc1-1lunarg24.04-1) noble; urgency=medium
 
   [ Hans-Kristian Arntzen ]
