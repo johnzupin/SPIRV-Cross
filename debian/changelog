@@ -1,3 +1,54 @@
+spirv-cross (2021.01.15+1110~rc1-1lunarg24.04-1) noble; urgency=medium
+
+  [ Hans-Kristian Arntzen ]
+  * HLSL: Fix clip/cull lowering for single element.
+
+  [ scribam ]
+  * Bump to CMake 3.10
+
+  [ Pedro Diaz ]
+  * Added some more Metal keywords used by in the wild to remap entry points
+
+  [ squidbus ]
+  * MSL: Terminate function with return value using return if ending in unreachable.
+
+  [ Hans-Kristian Arntzen ]
+  * GLSL: Deal with gl_Layer in vert/tese.
+  * MSL: Add option to disable rasterization depending on usage.
+  * MSL: Add missing reference output.
+  * MSL: Add auto-disable-rasterization option to C API.
+  * Roll deps.
+  * Get rid of stale references.
+  * Try bumping to upload-artifacts v4.
+  * Update SPIR-V headers.
+  * Deal with OpExtInstWithForwardRefsKHR.
+  * GLSL: Only consider inout for storage classes that make sense.
+  * MSL: Always pass BDA by value into functions.
+  * HLSL: Set up the pointer for wrapped mesh output properly.
+
+  [ Boyan Ding ]
+  * MSL: Expose information about specialization constants - macro mapping
+
+  [ Hans-Kristian Arntzen ]
+  * Use unordered_set instead of slower std::set.
+
+  [ Boyan Ding ]
+  * Allow non-literal specialization constant to be array size of OpConstantNull
+  * GLSL/MSL: Support VK_KHR_zero_initialize_workgroup_memory
+
+  [ Andrew Naumov ]
+  * MSL: Add missing gl_WorkGroupSize declaration in mesh shader
+  * MSL: Use spvUnsafeArray for BuiltIn in mesh shader
+  * MSL: Disable force_gl_in_out_block
+  * MSL: Fix mesh shader builtin names to match with CompilerGLSL::to_expression
+  * MSL: Mark hlsl mesh shader as valid in tests
+
+  [ Hans-Kristian Arntzen ]
+  * GLSL: Request 64-bit atomic extension as needed.
+  * GLSL: Deal with atomics on plain POD BDA.
+
+ -- john <john@odin>  Tue, 04 Mar 2025 09:03:35 -0700
+
 spirv-cross (2021.01.15+1070~rc1-1lunarg24.04-1) noble; urgency=medium
 
   [ chyyran ]
