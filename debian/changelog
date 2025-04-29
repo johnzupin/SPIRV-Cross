@@ -1,3 +1,41 @@
+spirv-cross (2021.01.15+1142~rc1-1lunarg24.04-1) noble; urgency=medium
+
+  [ Boyan Ding ]
+  * MSL: Apply input override on all flattened members in interface block
+  * MSL: Treat pointer to vector as scalar type when bitcasting
+
+  [ Hans-Kristian Arntzen ]
+  * MSL: Use the more proper pointer typing.
+
+  [ Evan Tang ]
+  * MSL: Use decltype for getting return of gather
+  * MSL: Remove spvForward
+
+  [ Hans-Kristian Arntzen ]
+  * GLSL: Implement SPV_KHR_cooperative_matrix.
+  * GLSL: Ban composite swizzle ops for coopmat.
+  * GLSL: Fix coopmat function parameter typing.
+  * GLSL: Deal more gracefully with coopmat types.
+  * GLSL: Workaround glslang issue with coopmat function overloads.
+
+  [ Bill Hollings ]
+  * MSL: Support broader tessellation I/O matching for VK_KHR_maintenance4.
+
+  [ Hans-Kristian Arntzen ]
+  * Style nit
+  * ci: Use ubuntu-24.04 image instead.
+
+  [ sean ]
+  * Add support for KHR_expect_assume
+
+  [ Hans-Kristian Arntzen ]
+  * Nits
+  * Roll deps.
+  * Update spir-v headers.
+  * GLSL: Implement GL_EXT_bfloat16
+
+ -- john <john@odin>  Tue, 29 Apr 2025 09:33:47 -0600
+
 spirv-cross (2021.01.15+1110~rc1-1lunarg24.04-1) noble; urgency=medium
 
   [ Hans-Kristian Arntzen ]
